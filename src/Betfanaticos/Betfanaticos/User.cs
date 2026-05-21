@@ -8,5 +8,6 @@ namespace Betfanaticos
 {
     internal class User
     {
+
     }
 }
