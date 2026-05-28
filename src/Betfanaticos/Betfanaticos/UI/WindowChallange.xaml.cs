@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace Betfanaticos.UI
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for WindowChallange.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class WindowChallange : Window
     {
-        public Login()
+        public WindowChallange()
         {
             InitializeComponent();
-        }
-
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

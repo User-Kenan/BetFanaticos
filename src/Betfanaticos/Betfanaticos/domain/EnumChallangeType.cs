@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Betfanaticos
 {
-    internal class Challenge
+    public enum EnumChallangeType
     {
+        DailyLogin,
+        BetOnGame,
+        PredictScore
     }
 }

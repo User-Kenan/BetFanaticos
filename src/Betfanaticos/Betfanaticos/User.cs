@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Betfanaticos
 {
-    internal class User
+    public class User
     {
-
+        public string Username { get; internal set; }
+        public string Password { get; internal set; }
     }
 }

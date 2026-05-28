@@ -5,14 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Betfanaticos.UI"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800">
-    <Grid>
-        <Button Content="Anmelden" Name="ButtonLogIn" Width="150" Height="50" VerticalAlignment="Bottom" Margin="90"></Button>
-        <Label Content="Noch Kein Account ?" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="290,0,0,60"></Label>
-        <Button Content="Registrieren" Background="Transparent" Name="ButtonRegister" VerticalAlignment="Bottom" Margin="100,0,0,63" Foreground="Red"></Button>
-        
-        
-        
-        
+        Title="Login" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Background="#F5F5F5">
+
+        <Border Width="350"
+                Padding="25"
+                Background="White"
+                CornerRadius="10"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+
+            <StackPanel>
+
+                <!-- Titel -->
+                <TextBlock Text="Anmelden"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,25"/>
+
+                <!-- Benutzername -->
+                <TextBlock Text="Benutzername"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,5"/>
+
+                <TextBox x:Name="txtUsername"
+                         Height="35"
+                         Margin="0,0,0,15"
+                         Padding="8"/>
+
+                <!-- Passwort -->
+                <TextBlock Text="Passwort"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,5"/>
+
+                <PasswordBox x:Name="txtPassword"
+                             Height="35"
+                             Margin="0,0,0,25"
+                             Padding="8"/>
+
+                <!-- Login Button -->
+                <Button x:Name="btnLogin"
+                        Content="Anmelden"
+                        Height="40"
+                        Background="#2D89EF"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Margin="0,0,0,20" Click="btnLogin_Click"/>
+
+                <!-- Kein Account -->
+                <TextBlock Text="Noch kein Account?"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10"/>
+
+                <Button x:Name="btnRegister"
+                        Content="Registrieren"
+                        Height="35"
+                        Background="#E0E0E0"
+                        FontWeight="SemiBold"/>
+
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
