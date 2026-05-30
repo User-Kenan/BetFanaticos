@@ -43,8 +43,6 @@ namespace Betfanaticos
                 return true;
             }
 
-           
-
             return false;
         }
     }

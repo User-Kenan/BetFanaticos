@@ -8,33 +8,50 @@ namespace Betfanaticos.domain
 {
     public class AuthService
     {
-        private User registeredUser;
+        private List<User> users = new List<User>();
+        public User CurrentUser { get; private set; }
 
         public User Register(string username, string password)
         {
+            foreach(User u in users)
+            {
+                if(username == u.UserName)
+                {
+                    Console.WriteLine("User Existiert bereits.");
+                    return null;
+                } 
+            }
 
-            registeredUser = new User();
-            registeredUser.Username = username;
-            registeredUser.Password = password; 
+            User user = new User
+            {
+                UserName = username,
+                PasswortHash = password 
+            };
 
-            return registeredUser;
+            users.Add(user);
+
+            return user;
         }
 
-        public bool Login(string username, string password)
+        public EnumLoginResponse Login(string username, string password)
         {
-            
-            
-            if (registeredUser.Username == username && registeredUser.Password == password && registeredUser != null)
+            foreach(User u in users)
             {
-                return true;
-            }
             
+                if(u.UserName == username)
+                {
+                    if(u.PasswortHash == password)
+                    {
+                        CurrentUser = u;
+                        return EnumLoginResponse.Success;
+                    }
 
-            else 
-            {
-                return false;
+                    return EnumLoginResponse.WrongPassword;
+                }
+               
             }
-            
+
+            return EnumLoginResponse.UserNotFound;
         }
 
         public void HashPassword(string password)
