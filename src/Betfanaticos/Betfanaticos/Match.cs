@@ -27,6 +27,8 @@ namespace Betfanaticos
             Sport = sport;
             MatchDate = matchdate;
         }
+
+
             
     
     

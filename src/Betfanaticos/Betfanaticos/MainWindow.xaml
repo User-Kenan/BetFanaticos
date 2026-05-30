@@ -6,7 +6,34 @@
         xmlns:local="clr-namespace:Betfanaticos"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
 
-    </Grid>
+    <DockPanel>
+
+        <!-- Header -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Height="60"
+                    Background="#222">
+
+            <Button Content="Games"
+                    Width="120"
+                    Margin="5"
+                    Click="Games_Click"/>
+
+            <Button Content="Statistics"
+                    Width="120"
+                    Margin="5"
+                    Click="Statistics_Click"/>
+
+            <Button Content="Settings"
+                    Width="120"
+                    Margin="5"
+                    Click="Settings_Click"/>
+
+        </StackPanel>
+
+        
+        <ContentControl x:Name="MainContent"/>
+
+    </DockPanel>
 </Window>
