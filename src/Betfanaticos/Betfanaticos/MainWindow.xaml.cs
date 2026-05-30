@@ -19,6 +19,26 @@ namespace Betfanaticos
         public MainWindow()
         {
             InitializeComponent();
+            MainContent.Content = new MatchView();
+        }
+
+     
+
+       
+
+        private void Games_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new MatchView();
+        }
+
+        private void Statistics_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO
         }
     }
 }
