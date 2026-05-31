@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Betfanaticos.domain;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -9,6 +10,7 @@ namespace Betfanaticos
     /// </summary>
     public partial class App : Application
     {
+        public static AuthService AuthService { get; } = new AuthService();
     }
 
 }

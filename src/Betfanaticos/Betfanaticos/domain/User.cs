@@ -10,7 +10,7 @@ namespace Betfanaticos.domain
     {
         public int Id { get; set; }
         public string UserName { get; set; }
-        private string PasswortHash { get; set; }
+        public string PasswortHash { get; set; }
         public int Coins { get; set; }
         public string FavouriteTeam { get; set; }
 
@@ -21,6 +21,11 @@ namespace Betfanaticos.domain
             PasswortHash = passwordHash;
             FavouriteTeam = favouriteTeam;
             Coins = coins;
+        }
+
+        public User()
+        {
+
         }
 
 

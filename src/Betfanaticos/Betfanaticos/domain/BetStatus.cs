@@ -8,8 +8,12 @@ namespace Betfanaticos.domain
 {
     public enum BetStatus
     {
+<<<<<<<< HEAD:src/Betfanaticos/Betfanaticos/domain/BetStatus.cs
         Pending,
         Won,
         Lost
+========
+
+>>>>>>>> feature/authenticate:src/Betfanaticos/Betfanaticos/domain/Bet.cs
     }
 }
