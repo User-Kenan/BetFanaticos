@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Betfanaticos
+namespace Betfanaticos.domain
 {
-    public class Bet
+    public enum MatchStatus
     {
-        
+        Upcoming,
+        Live,
+        Finished,
     }
 }

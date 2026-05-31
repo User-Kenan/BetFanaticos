@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Betfanaticos
+namespace Betfanaticos.domain
 {
-    public enum SportType
+    public class Bet
     {
-        Football, 
-        Volleyball,
-        Basketball,
+
     }
 }
