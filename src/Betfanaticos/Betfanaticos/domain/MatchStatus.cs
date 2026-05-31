@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Betfanaticos
+namespace Betfanaticos.domain
 {
-    public enum SportType
+    public enum MatchStatus
     {
-        Football, 
-        Volleyball,
-        Basketball,
+        Upcoming,
+        Live,
+        Finished,
     }
 }

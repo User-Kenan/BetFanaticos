@@ -7,15 +7,15 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="MatchCardView.xaml.cs">
+    <Compile Update="UI\MatchCardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="MatchView.xaml.cs">
+    <Compile Update="UI\MatchView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MainWindow.xaml">
+    <Page Update="UI\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
