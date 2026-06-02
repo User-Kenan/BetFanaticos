@@ -8,7 +8,7 @@ namespace Betfanaticos.domain
 {
     public class ApiService
     {
-
+        // HTTP-Anfragen an eine API zu senden
         private readonly HttpClient _client;
 
         public ApiService()
@@ -19,10 +19,10 @@ namespace Betfanaticos.domain
             _client.DefaultRequestHeaders.Add("X-Auth-Token", "cc9941e4e76441ad860b0b38da3fb426");
         }
 
-
+        // liefert eine Liste von Match Objekten zurück 
         public async Task<List<Match>> GetFootballMatchesAsync()
         {
-            // API aufrufen 
+            // Ladet JSON Inhalte herunter und speichert ihnn als string  
             string json = await _client.GetStringAsync("https://api.football-data.org/v4/competitions/PL/matches");
 
             // JSON in Obejkt umwandel
@@ -36,6 +36,7 @@ namespace Betfanaticos.domain
 
             List<Match> matches = new List<Match>();
 
+            // nimmt die Daten aus der API und erstellt daraus eigenen Match-Objekte
             foreach (ApiMatch apiMatch in response.Matches)
             {
                 Match match = new Match(
@@ -51,7 +52,9 @@ namespace Betfanaticos.domain
 
                 matches.Add(match);
             }
-
+            // Sortiert spiele nach Datum 
+            // Die ersten 30 Spiele werden genommen
+            // Wird in Liste umgewandelt 
             return matches.OrderBy(m => m.MatchDate).Take(30).ToList();
         }
     }
