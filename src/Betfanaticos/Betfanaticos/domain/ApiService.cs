@@ -22,7 +22,7 @@ namespace Betfanaticos.domain
         public async Task<List<Match>> GetFootballMatchesAsync()
         {
             // API aufrufen 
-            string json = await _client.GetStringAsync("https://api.football-data.org/v4/matches?status=SCHEDULED");
+            string json = await _client.GetStringAsync("https://api.football-data.org/v4/competitions/PL/matches");
 
             // JSON in Obejkt umwandel
             FootballApiResponse? response =

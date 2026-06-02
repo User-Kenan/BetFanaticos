@@ -30,6 +30,8 @@ namespace Betfanaticos.domain
 
             users.Add(user);
 
+            CurrentUser = user;
+
             return user;
         }
 

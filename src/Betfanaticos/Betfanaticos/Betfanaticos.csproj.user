@@ -7,7 +7,24 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MainWindow.xaml">
+    <Compile Update="UI\Mainwindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\MatchCardView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\MatchView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\WindowMatch.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\Mainwindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\WindowMatch.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

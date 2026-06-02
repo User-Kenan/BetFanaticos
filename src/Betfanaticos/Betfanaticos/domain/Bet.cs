@@ -29,6 +29,6 @@ namespace Betfanaticos.domain
 
 
 
->>>>>>>> feature/authenticate:src/Betfanaticos/Betfanaticos/domain/Bet.cs
+
     }
 }
