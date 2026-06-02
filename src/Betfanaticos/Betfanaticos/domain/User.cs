@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Betfanaticos
+namespace Betfanaticos.domain
 {
     public class User
     {
         public int Id { get; set; }
         public string UserName { get; set; }
-        private string PasswortHash { get; set; }
-        public int Coins { get; set; } = 1000;
+        public string PasswortHash { get; set; }
+        public int Coins { get; set; }
         public string FavouriteTeam { get; set; }
 
 
@@ -21,6 +21,11 @@ namespace Betfanaticos
             PasswortHash = passwordHash;
             FavouriteTeam = favouriteTeam;
             Coins = coins;
+        }
+
+        public User()
+        {
+
         }
 
 

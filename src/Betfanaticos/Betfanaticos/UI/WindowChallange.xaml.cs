@@ -12,24 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-
-namespace Betfanaticos
+namespace Betfanaticos.UI
 {
     /// <summary>
-    /// Interaktionslogik für MatchCardView.xaml
+    /// Interaction logic for WindowChallange.xaml
     /// </summary>
-    public partial class MatchCardView : UserControl
+    public partial class WindowChallange : Window
     {
-        public MatchCardView()
+        public WindowChallange()
         {
             InitializeComponent();
-        }
-
-        public void DisplayMatch(Match match)
-        {
-            TeamsText.Text = $"{match.HomeTeam} vs {match.AwayTeam}";
-
-            DateText.Text = match.MatchDate.ToString("dd.MM.yyyy HH:mm");
         }
     }
 }

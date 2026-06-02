@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Betfanaticos
+namespace Betfanaticos.domain
 {
     public class ApiService
     {
@@ -16,7 +16,7 @@ namespace Betfanaticos
             _client = new HttpClient();
 
             // API Schlüssel 
-            _client.DefaultRequestHeaders.Add("X-Auth-Token","cc9941e4e76441ad860b0b38da3fb426");
+            _client.DefaultRequestHeaders.Add("X-Auth-Token", "cc9941e4e76441ad860b0b38da3fb426");
         }
 
 

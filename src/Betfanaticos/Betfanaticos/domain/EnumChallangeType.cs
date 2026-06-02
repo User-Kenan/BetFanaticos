@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Betfanaticos
+namespace Betfanaticos.domain
 {
-    internal class Challenge
+    public enum EnumChallangeType
     {
+        DailyLogin,
+        BetOnGame,
+        PredictScore
     }
 }
