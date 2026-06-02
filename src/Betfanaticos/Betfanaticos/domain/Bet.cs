@@ -28,7 +28,5 @@ namespace Betfanaticos.domain
 
 
 
-
-
     }
 }

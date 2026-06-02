@@ -19,6 +19,7 @@ namespace Betfanaticos.domain
             _client.DefaultRequestHeaders.Add("X-Auth-Token", "cc9941e4e76441ad860b0b38da3fb426");
         }
 
+
         public async Task<List<Match>> GetFootballMatchesAsync()
         {
             // API aufrufen 
@@ -42,7 +43,7 @@ namespace Betfanaticos.domain
                     apiMatch.AwayTeam.Name,
                     "Premier League",
                     SportType.Football,
-                    apiMatch.UtcDate
+                    apiMatch.UtcDate    
                 );
 
                 match.HomeScore = apiMatch.Score.FullTime.Home ?? 0;
@@ -51,7 +52,7 @@ namespace Betfanaticos.domain
                 matches.Add(match);
             }
 
-            return matches.OrderBy(m => m.MatchDate).Take(10).ToList();
+            return matches.OrderBy(m => m.MatchDate).Take(30).ToList();
         }
     }
 }
