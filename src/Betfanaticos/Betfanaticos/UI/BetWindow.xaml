@@ -1,0 +1,30 @@
+﻿<Window x:Class="Betfanaticos.UI.BetWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Betfanaticos.UI"
+        mc:Ignorable="d"
+        Title="BetWindow" Height="450" Width="800">
+    <StackPanel Margin="20">
+        <TextBlock x:Name="MatchText"
+               FontSize="20"
+               FontWeight="Bold"
+               Margin="0,0,0,15"/>
+
+        <TextBlock Text="Betrag:"/>
+        <TextBox x:Name="AmountTextBox"
+             Margin="0,5,0,15"/>
+
+        <TextBlock Text="Team auswählen:"/>
+
+        <RadioButton x:Name="HomeTeamRadio"
+                 Margin="0,8,0,0"/>
+
+        <RadioButton x:Name="AwayTeamRadio"
+                 Margin="0,8,0,15"/>
+
+        <Button Content="Wette speichern"
+            Click="SaveBet_Click"/>
+    </StackPanel>
+</Window>

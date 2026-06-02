@@ -23,8 +23,11 @@
                        FontSize="14"
                        Margin="0,5,0,10"/>
 
-            <Button Content="Wetten"
-                    Height="35"/>
+            <Button Content="Bet"
+                    Height="35" Click="BetButton_Click"/>
+            
+
+            
         </StackPanel>
 
     </Border>
