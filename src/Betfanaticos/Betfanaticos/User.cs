@@ -11,7 +11,7 @@ namespace Betfanaticos
         public int Id { get; set; }
         public string UserName { get; set; }
         private string PasswortHash { get; set; }
-        public int Coins { get; set; }
+        public int Coins { get; set; } = 1000;
         public string FavouriteTeam { get; set; }
 
 

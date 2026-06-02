@@ -19,10 +19,11 @@ namespace Betfanaticos
             _client.DefaultRequestHeaders.Add("X-Auth-Token","cc9941e4e76441ad860b0b38da3fb426");
         }
 
+
         public async Task<List<Match>> GetFootballMatchesAsync()
         {
             // API aufrufen 
-            string json = await _client.GetStringAsync("https://api.football-data.org/v4/matches?status=SCHEDULED");
+            string json = await _client.GetStringAsync("https://api.football-data.org/v4/competitions/PL/matches");
 
             // JSON in Obejkt umwandel
             FootballApiResponse? response =
@@ -42,7 +43,7 @@ namespace Betfanaticos
                     apiMatch.AwayTeam.Name,
                     "Premier League",
                     SportType.Football,
-                    apiMatch.UtcDate
+                    apiMatch.UtcDate    
                 );
 
                 match.HomeScore = apiMatch.Score.FullTime.Home ?? 0;
@@ -51,7 +52,7 @@ namespace Betfanaticos
                 matches.Add(match);
             }
 
-            return matches.OrderBy(m => m.MatchDate).Take(10).ToList();
+            return matches.OrderBy(m => m.MatchDate).Take(30).ToList();
         }
     }
 }
