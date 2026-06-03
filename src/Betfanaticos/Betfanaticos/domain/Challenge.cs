@@ -18,8 +18,6 @@ namespace Betfanaticos
         public int RequiredAmount { get; private set; }
         public int CurrentState { get; private set; }
 
-        public bool Finished { get; set; } = false;
-
         public Challenge(string title,string description,EnumChallangeType challengeType,int requiredAmount)
         {
             Title = title;

@@ -56,5 +56,10 @@ namespace Betfanaticos.UI
             mainwindow.Show();
             
         }
+
+        private void Textbox_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           
+        }
     }
 }
