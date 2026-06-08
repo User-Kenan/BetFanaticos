@@ -24,6 +24,7 @@ namespace Betfanaticos
         {
             InitializeComponent();
 
+            // spiele werden immer von neu geladen 
             LoadMatches();
         }
 
@@ -35,6 +36,7 @@ namespace Betfanaticos
             DisplayMatches(FootballPanel, footballMatches);
         }
 
+        // Baut die Oberfläche aus 
         private void DisplayMatches(StackPanel panel, List<Match> matches)
         {
             panel.Children.Clear();
