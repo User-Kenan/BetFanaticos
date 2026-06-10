@@ -37,5 +37,26 @@ namespace Betfanaticos.domain
                 return new List<Match>();
             }
         }
+
+        public async Task<List<Match>> GetBasketballMatchesAsync()
+        {
+            try
+            {
+                string json = await _client.GetStringAsync(
+                    "http://127.0.0.1:8000/match/basketball-api"
+                );
+
+                return JsonSerializer.Deserialize<List<Match>>(
+                    json,
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }) ?? new List<Match>();
+            }
+            catch
+            {
+                return new List<Match>();
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@
                     Height="40"/>
 
             <Button Content="Basketball"
-                    Click="Statistics_Click"
+                    Click="Basketball_Click"
                     Margin="10"
                     Height="40"/>
 

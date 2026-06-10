@@ -22,7 +22,7 @@ namespace Betfanaticos.UI
         public WindowMatch()
         {
             InitializeComponent();
-            MainContent.Content = new MatchView();
+            MainContent.Content = new MatchView("Football");
         }
     }
 }
