@@ -23,22 +23,25 @@ namespace Betfanaticos.UI
         {
             InitializeComponent();
 
-            MainContent.Content = new MatchView("Football");
         }
 
-        private void Games_Click(object sender, RoutedEventArgs e)
+        
+
+        private void Matches_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new MatchView("Football");
+            MatchesWindow matchesWindow = new MatchesWindow();
+            matchesWindow.Show();
         }
 
-        private void Basketball_Click(object sender, RoutedEventArgs e)
+        private void Statistics_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new MatchView("Basketball");
+            
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
+        private void Challenges_Click(object sender, RoutedEventArgs e)
         {
-
+            WindowChallange windowChallange = new WindowChallange();
+            windowChallange.Show();
         }
     }
 }

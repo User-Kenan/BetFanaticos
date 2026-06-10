@@ -1,0 +1,40 @@
+﻿<Window x:Class="Betfanaticos.UI.MatchesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Betfanaticos" Height="600" Width="1000">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Menü links -->
+        <StackPanel Grid.Column="0" Background="#222">
+            <TextBlock Text="Betfanaticos"
+                       Foreground="White"
+                       FontSize="22"
+                       Margin="15"/>
+
+            <Button Content="Football"
+                    Click="Games_Click"
+                    Margin="10"
+                    Height="40"/>
+
+            <Button Content="Basketball"
+                    Click="Basketball_Click"
+                    Margin="10"
+                    Height="40"/>
+
+            <Button Content="F1"
+                    Click="Settings_Click"
+                    Margin="10"
+                    Height="40"/>
+        </StackPanel>
+
+        <!-- Inhalt rechts -->
+        <ContentControl x:Name="MainContent"
+                        Grid.Column="1"
+                        Margin="10"/>
+    </Grid>
+</Window>
