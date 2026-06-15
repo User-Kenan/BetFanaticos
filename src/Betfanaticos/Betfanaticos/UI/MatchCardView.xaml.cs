@@ -31,6 +31,7 @@ namespace Betfanaticos
         }
 
         private Match? currentMatch;
+        private User currentUser;
 
         public void DisplayMatch(Match match)
         {
@@ -48,7 +49,7 @@ namespace Betfanaticos
             if (currentMatch == null)
                 return;
 
-            BetWindow betWindow = new BetWindow(currentMatch);
+            BetWindow betWindow = new BetWindow(currentMatch, currentUser);
             betWindow.ShowDialog();
         }
     }
