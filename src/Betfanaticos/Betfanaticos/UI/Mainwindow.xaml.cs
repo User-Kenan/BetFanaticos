@@ -43,5 +43,10 @@ namespace Betfanaticos.UI
             WindowChallange windowChallange = new WindowChallange();
             windowChallange.Show();
         }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

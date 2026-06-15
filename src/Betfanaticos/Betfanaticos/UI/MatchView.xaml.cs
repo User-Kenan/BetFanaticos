@@ -25,7 +25,7 @@ namespace Betfanaticos
         {
             InitializeComponent();
 
-            InitializeComponent();
+        
             sport = sportType;
             LoadMatches();
         }
@@ -39,13 +39,15 @@ namespace Betfanaticos
 
             if (sport == "Basketball")
             {
-                TitleText.Text = "🏀 Basketball";
                 matches = await api.GetBasketballMatchesAsync();
+            }
+            else if (sport == "Football")
+            {
+                matches = await api.GetFootballMatchesAsync();
             }
             else
             {
-                TitleText.Text = "⚽ Football";
-                matches = await api.GetFootballMatchesAsync();
+                matches = await api.GetBaseballMatchesAsync();
             }
 
             DisplayMatches(MatchesPanel, matches);

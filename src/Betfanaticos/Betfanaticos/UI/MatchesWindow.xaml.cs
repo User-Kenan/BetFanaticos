@@ -36,9 +36,19 @@ namespace Betfanaticos.UI
             MainContent.Content = new MatchView("Basketball");
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
+        
 
+        private void MLB_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new MatchView("Baseball");
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Mainwindow main = new Mainwindow();
+            main.Show();
+
+            this.Close();
         }
     }
 }

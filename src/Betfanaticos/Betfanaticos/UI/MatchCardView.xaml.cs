@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System;
 
 
 namespace Betfanaticos
@@ -39,6 +39,8 @@ namespace Betfanaticos
             TeamsText.Text = $"{match.HomeTeam} vs {match.AwayTeam}";
 
             DateText.Text = match.MatchDate.ToString("dd.MM.yyyy HH:mm");
+
+          
         }
 
         private void BetButton_Click(object sender, RoutedEventArgs e)

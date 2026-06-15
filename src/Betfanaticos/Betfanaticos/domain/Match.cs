@@ -17,6 +17,7 @@ namespace Betfanaticos.domain
         public int HomeScore { get; set; }
         public SportType Sport { get; set; }
         public MatchStatus Status { get; set; }
+     
 
 
         public Match(string hometeam, string awayteam, string league, SportType sport, DateTime matchdate)

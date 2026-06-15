@@ -9,11 +9,7 @@
     <ScrollViewer>
         <StackPanel Margin="10">
 
-            <TextBlock x:Name="TitleText"
-                       Text="⚽ Football"
-                       FontSize="26"
-                       FontWeight="Bold"
-                       Margin="10"/>
+            
 
             <StackPanel x:Name="MatchesPanel"/>
 

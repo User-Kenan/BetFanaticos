@@ -61,7 +61,7 @@
                    Fill="#66000000"/>
 
         <TextBlock Grid.Row="0"
-                   Text="Willkommen Zuhause!"
+                   Text="Bet Fanaticos"
                    Foreground="White"
                    FontSize="48"
                    FontWeight="Bold"
@@ -94,6 +94,6 @@
         Width="550"
         Height="100"
         Style="{StaticResource roundMenuButton}"
-        Click="Challenges_Click"/>
+        Click="Quit_Click"/>
     </Grid>
 </Window>

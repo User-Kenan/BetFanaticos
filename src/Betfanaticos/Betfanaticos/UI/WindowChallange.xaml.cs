@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Betfanaticos.domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,33 @@ namespace Betfanaticos.UI
     /// </summary>
     public partial class WindowChallange : Window
     {
+        private readonly ApiService apiService = new();
+
         public WindowChallange()
         {
             InitializeComponent();
+            LoadChallenges();
+        }
+
+        private async void LoadChallenges()
+        {
+            var challenges = await apiService.GetSidequestsAsync();
+
+            ChallengesPanel.Children.Clear();
+
+            foreach (var challenge in challenges)
+            {
+                ChallengeCardView card = new ChallengeCardView(challenge);
+                ChallengesPanel.Children.Add(card);
+            }
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Mainwindow main = new Mainwindow();
+            main.Show();
+
+            this.Close();
         }
     }
 }
