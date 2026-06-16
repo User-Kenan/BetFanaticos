@@ -4,6 +4,7 @@ using System.Windows;
 using System.Xml.Linq;
 using Betfanaticos.data.Services;
 using System.Net.Http;
+using static AuthServiceREST;
 
 namespace Betfanaticos.UI
 {
@@ -32,7 +33,8 @@ namespace Betfanaticos.UI
 
                 var result = await authService.Login(request); // Login methode wird mit request Body aufgerugen an server geschcikt dann
 
-           
+                SessionService.SetUser(result);
+
 
                 Mainwindow mainwindow = new Mainwindow();
                 mainwindow.Show();

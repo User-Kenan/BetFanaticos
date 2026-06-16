@@ -67,4 +67,27 @@ public class AuthServiceREST : IAuthServiceRest
 
         return JsonSerializer.Deserialize<UserResponse>(content)!;
     }
+
+    public static class SessionService
+    {
+        public static int UserId { get; private set; }
+        public static string Username { get; private set; }
+        public static string ApiKey { get; private set; }
+
+        public static bool IsLoggedIn => ApiKey != null;
+
+        public static void SetUser(LoginResponse response)
+        {
+            UserId = response.user.userId;
+            Username = response.user.name;
+            ApiKey = response.api_key;
+        }
+
+        public static void Logout()
+        {
+            UserId = 0;
+            Username = null;
+            ApiKey = null;
+        }
+    }
 }

@@ -47,8 +47,8 @@ namespace Betfanaticos.UI
 
             
 
-                Mainwindow mainwindow = new Mainwindow();
-                mainwindow.Show();
+                Login login = new Login();
+                login.Show();
             }
             catch (Exception ex)
             {
