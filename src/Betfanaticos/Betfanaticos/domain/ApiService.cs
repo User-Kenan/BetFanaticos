@@ -121,7 +121,7 @@ namespace Betfanaticos.domain
             }
             catch
             {
-                Log.Error(ex, "Fehler beim Laden der Baseball API");
+                Log.Error("Fehler beim Laden der Baseball API");
                 return new List<Match>();
             }
         }

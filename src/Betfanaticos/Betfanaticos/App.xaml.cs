@@ -10,7 +10,6 @@ namespace Betfanaticos
     /// </summary>
     public partial class App : Application
     {
-        public static AuthService AuthService { get; } = new AuthService();
     }
 
 }

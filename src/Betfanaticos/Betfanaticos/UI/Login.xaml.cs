@@ -1,61 +1,56 @@
-﻿using Betfanaticos.domain;
+﻿using Betfanaticos.data.models;
+using Betfanaticos.domain;
 using System.Windows;
+using System.Xml.Linq;
+using Betfanaticos.data.Services;
+using System.Net.Http;
 
 namespace Betfanaticos.UI
 {
     public partial class Login : Window
     {
-        private AuthService authservice;
+
+        private readonly IAuthServiceRest authService;
 
        public Login()
         {
             InitializeComponent();
-            authservice = new AuthService();
+            HttpClient client = new HttpClient();
+            authService = new AuthServiceREST(client);
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        // Ki prompt : Siehe AuthServiceREST
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
-            string input_name = txtUsername.Text;
-            string input_password = txtPassword.Password;
-
-            if (string.IsNullOrWhiteSpace(input_name) ||
-                string.IsNullOrWhiteSpace(input_password))
+            try
             {
-                MessageBox.Show("Bitte alle Felder ausfüllen");
-                return;
-            }
+                var request = new LoginRequest // Request wird an diese TExtböxe angebunden
+                {
+                    name = txtUsername.Text,
+                    password = txtPassword.Password
+                };
 
-            var user = App.AuthService.Login(input_name, input_password);
-
-            if(user == EnumLoginResponse.UserNotFound)
-            {
-                MessageBox.Show("Dieser User Existiert nicht");
-                return;
-            }
-
-            if(user == EnumLoginResponse.WrongPassword)
-            {
-                MessageBox.Show("Falsches Passwort");
-                return;
-            }
-
-            if(user == EnumLoginResponse.Success)
-            {
-                Mainwindow mainwindow = new Mainwindow();
-                mainwindow.Show();
-            }
+                var result = await authService.Login(request); // Login methode wird mit request Body aufgerugen an server geschcikt dann
 
            
 
-            
+                Mainwindow mainwindow = new Mainwindow();
+                mainwindow.Show();
 
-            
+
+            }
+            catch (Exception ex) // Falls ein fehler auftaucht
+            {
+                MessageBox.Show("Login fehlgeschlagen: " + ex.Message);
+            }
         }
+    
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             WindowCreateAcc registerWindow = new WindowCreateAcc();
             registerWindow.Show();
         }
+
     }
 }

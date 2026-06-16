@@ -52,5 +52,13 @@ namespace Betfanaticos.UI
             Log.Information("Application beenden");
             Application.Current.Shutdown();
         }
+
+        private void Matches_Click(object sender, RoutedEventArgs e)
+        {
+       
+            MatchesWindow matchesWindow = new MatchesWindow();
+            matchesWindow.Show();
+            
+        }
     }
 }
