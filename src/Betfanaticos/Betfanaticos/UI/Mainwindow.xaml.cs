@@ -18,40 +18,29 @@ namespace Betfanaticos.UI
     /// <summary>
     /// Interaction logic for Mainwindow.xaml
     /// </summary>
-    public partial class Mainwindow : Window
+    public partial class MainWindow : Window
     {
-        public Mainwindow()
+        public MainWindow()
         {
-            
             InitializeComponent();
             LabelUser.Content = App.AuthService.CurrentUser.UserName;
             LabelCredits.Content = App.AuthService.CurrentUser.Coins;
-
         }
 
-        public void Load_Label()
-        {
+          
 
-        }
-        
-
-        private void TextBoxBet(object sender, RoutedEventArgs e)
+        private void ButtonBet(object sender, RoutedEventArgs e)
         {
             WindowMatch match = new WindowMatch();
             match.Show();
         }
 
-        private void TextBoxChallange(object sender, RoutedEventArgs e)
+        private void ButtonChallanges(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void TextBoxStatistics(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TextBoxSettings(object sender, RoutedEventArgs e)
+        private void ButtonStats(object sender, RoutedEventArgs e)
         {
 
         }

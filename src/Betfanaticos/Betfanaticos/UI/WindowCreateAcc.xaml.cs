@@ -52,7 +52,7 @@ namespace Betfanaticos.UI
                 return;
             }
 
-            Mainwindow mainwindow = new Mainwindow();
+            MainWindow mainwindow = new MainWindow();
             mainwindow.Show();
             
         }
