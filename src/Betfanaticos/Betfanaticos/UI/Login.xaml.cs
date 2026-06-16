@@ -1,61 +1,50 @@
-﻿using Betfanaticos.domain;
+﻿using Betfanaticos.data.models;
+using Betfanaticos.domain;
 using System.Windows;
+using System.Xml.Linq;
+using Betfanaticos.data.Services;
+using System.Net.Http;
 
 namespace Betfanaticos.UI
 {
     public partial class Login : Window
     {
-        private AuthService authservice;
+
+        private readonly IAuthServiceRest authService;
 
         public Login()
         {
             InitializeComponent();
-            authservice = new AuthService();
+            HttpClient client = new HttpClient();
+            authService = new AuthServiceREST(client);
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
-            string input_name = txtUsername.Text;
-            string input_password = txtPassword.Password;
-
-            if (string.IsNullOrWhiteSpace(input_name) ||
-                string.IsNullOrWhiteSpace(input_password))
+            try
             {
-                MessageBox.Show("Bitte alle Felder ausfüllen");
-                return;
+                var request = new LoginRequest
+                {
+                    name = txtUsername.Text,
+                    password = txtPassword.Password
+                };
+
+                var result = await authService.Login(request);
+
+                MessageBox.Show("Login erfolgreich! Role: " + result.user.role);
             }
-
-            var user = App.AuthService.Login(input_name, input_password);
-
-            if(user == EnumLoginResponse.UserNotFound)
+            catch (Exception ex)
             {
-                MessageBox.Show("Dieser User Existiert nicht");
-                return;
+                MessageBox.Show("Login fehlgeschlagen: " + ex.Message);
             }
-
-            if(user == EnumLoginResponse.WrongPassword)
-            {
-                MessageBox.Show("Falsches Passwort");
-                return;
-            }
-
-            if(user == EnumLoginResponse.Success)
-            {
-                Mainwindow mainwindow = new Mainwindow();
-                mainwindow.Show();
-            }
-
-           
-
-            
-
-            
         }
+    
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             WindowCreateAcc registerWindow = new WindowCreateAcc();
             registerWindow.Show();
         }
+
     }
 }
