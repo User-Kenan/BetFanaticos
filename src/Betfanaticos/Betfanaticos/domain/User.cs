@@ -35,10 +35,19 @@ namespace Betfanaticos.domain
             return Coins;
         }
 
-        public int RemoveCoins(int coins)
+        public bool RemoveCoins(int coins)
         {
+            if (coins <= 0)
+            {
+                return false;
+            }
+            if (Coins < coins)
+            {
+                return false;
+            }
+
             Coins -= coins;
-            return Coins;
+            return true;
         }
 
 

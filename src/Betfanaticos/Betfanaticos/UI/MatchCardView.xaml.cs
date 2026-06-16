@@ -1,5 +1,7 @@
 ﻿using Betfanaticos.domain;
 using Betfanaticos.UI;
+using Serilog;
+using System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System;
 
 
 namespace Betfanaticos
@@ -35,6 +36,8 @@ namespace Betfanaticos
 
         public void DisplayMatch(Match match)
         {
+            Log.Information("Match wird angezeigt");
+
             currentMatch = match;
 
             TeamsText.Text = $"{match.HomeTeam} vs {match.AwayTeam}";
@@ -46,8 +49,13 @@ namespace Betfanaticos
 
         private void BetButton_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Wettfenster wird geöffnet");
             if (currentMatch == null)
+            {
+                Log.Error("Keine Matche verfügbar");
                 return;
+            }
+                
 
             BetWindow betWindow = new BetWindow(currentMatch, currentUser);
             betWindow.ShowDialog();

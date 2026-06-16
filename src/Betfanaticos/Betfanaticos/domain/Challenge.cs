@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Betfanaticos.domain;
+using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Betfanaticos.domain;
 
 namespace Betfanaticos
 {
@@ -31,6 +32,7 @@ namespace Betfanaticos
 
         public void UpdateCurrentState(int amount)
         {
+            Log.Information("Challenge Fortschritt erhöht. Challenge");
             CurrentState = CurrentState + amount;
         }
 
@@ -39,6 +41,7 @@ namespace Betfanaticos
 
             if (RequiredAmount == CurrentState)
             {
+                Log.Information("Challenge abgeschlossen");
                 return true;
             }
 

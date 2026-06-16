@@ -1,4 +1,5 @@
 ﻿using Betfanaticos.domain;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +26,13 @@ namespace Betfanaticos.UI
         public WindowChallange()
         {
             InitializeComponent();
+            Log.Information("Challenge Fenster geöffnet");
             LoadChallenges();
         }
 
         private async void LoadChallenges()
         {
+            Log.Information("Challenges werden geladen");
             var challenges = await apiService.GetSidequestsAsync();
 
             ChallengesPanel.Children.Clear();
@@ -39,10 +42,12 @@ namespace Betfanaticos.UI
                 ChallengeCardView card = new ChallengeCardView(challenge);
                 ChallengesPanel.Children.Add(card);
             }
+            Log.Information("Challenges erfolgreich geladen");
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Zurück zum Hauptmenü");
             Mainwindow main = new Mainwindow();
             main.Show();
 
