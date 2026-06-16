@@ -12,12 +12,26 @@ namespace Betfanaticos.UI
     {
 
         private readonly IAuthServiceRest authService;
-
+        bool useFakeService = true;
         public Login()
         {
             InitializeComponent();
-            HttpClient client = new HttpClient();
-            authService = new AuthServiceREST(client);
+
+            // Umschalten zwischen echter REST-API und Fake-Service.
+            // Beim Fake-Service wird kein FastAPI-Server benötigt.
+            if (useFakeService)
+            {
+                authService = new FakeAuthService();
+            }
+            else
+            {
+                HttpClient client = new HttpClient()
+                {
+                    BaseAddress = new Uri("http://127.0.0.1:8000/")
+                };
+
+                authService = new AuthServiceREST(client);
+            }
         }
 
         // Ki prompt : Siehe AuthServiceREST
@@ -25,24 +39,31 @@ namespace Betfanaticos.UI
         {
             try
             {
-                var request = new LoginRequest // Request wird an diese TExtböxe angebunden
+                // Erstellt das Request-Objekt aus den Eingaben des Benutzers.
+                var request = new LoginRequest
                 {
                     name = txtUsername.Text,
                     password = txtPassword.Password
                 };
 
-                var result = await authService.Login(request); // Login methode wird mit request Body aufgerugen an server geschcikt dann
+                // Führt den Login über den gewählten Service aus.
+                // Je nach Einstellung wird entweder die REST-API
+                // oder der Fake-Service verwendet.
+                var result = await authService.Login(request);
 
+                // Speichert die Benutzerdaten global für die aktuelle Sitzung.
                 SessionService.SetUser(result);
 
-
+                // Öffnet das Hauptfenster nach erfolgreichem Login.
                 Mainwindow mainwindow = new Mainwindow();
                 mainwindow.Show();
 
-
+                // Schließt das Login-Fenster.
+                this.Close();
             }
-            catch (Exception ex) // Falls ein fehler auftaucht
+            catch (Exception ex)
             {
+                // Zeigt mögliche Fehler dem Benutzer an.
                 MessageBox.Show("Login fehlgeschlagen: " + ex.Message);
             }
         }
