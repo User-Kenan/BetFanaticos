@@ -1,4 +1,5 @@
 ﻿using Betfanaticos.domain;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,14 +42,17 @@ namespace Betfanaticos.UI
 
         private void SaveBet_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Wette wurde gespeichert");
             if (!int.TryParse(AmountTextBox.Text, out int amount))
             {
+                Log.Error("Kein Gültiger Betrag wurde eingegeben");
                 MessageBox.Show("Bitte gültigen Betrag eingeben.");
                 return;
             }
 
             if (amount <= 0)
             {
+                Log.Error("Betrag kleiner als 0 wurde eingegeben");
                 MessageBox.Show("Betrag muss größer als 0 sein.");
                 return;
             }

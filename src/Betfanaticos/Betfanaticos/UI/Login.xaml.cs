@@ -7,7 +7,7 @@ namespace Betfanaticos.UI
     {
         private AuthService authservice;
 
-        public Login()
+       public Login()
         {
             InitializeComponent();
             authservice = new AuthService();

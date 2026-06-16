@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Betfanaticos.domain;
+using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Betfanaticos.domain;
 
 namespace Betfanaticos
 {
@@ -25,7 +26,7 @@ namespace Betfanaticos
         {
             InitializeComponent();
 
-        
+            Log.Information("MatchView geöffnet für Sportart: {Sport}", sport);
             sport = sportType;
             LoadMatches();
         }
@@ -36,6 +37,7 @@ namespace Betfanaticos
             ApiService api = new ApiService();
 
             List<Match> matches;
+            Log.Information("Matches werden geladen für Sportart: {Sport}", sport);
 
             if (sport == "Basketball")
             {
@@ -49,7 +51,7 @@ namespace Betfanaticos
             {
                 matches = await api.GetBaseballMatchesAsync();
             }
-
+            Log.Information("Matches erfolgreich geladen");
             DisplayMatches(MatchesPanel, matches);
 
 
@@ -59,7 +61,7 @@ namespace Betfanaticos
         private void DisplayMatches(StackPanel panel, List<Match> matches)
         {
             panel.Children.Clear();
-
+            Log.Information("Match Cards werden angezeigt");
             foreach (Match match in matches)
             {
                 MatchCardView card = new MatchCardView();

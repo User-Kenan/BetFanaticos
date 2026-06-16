@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,11 +29,13 @@ namespace Betfanaticos.UI
 
         private void Games_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Fusballspiele werden geladen");
             MainContent.Content = new MatchView("Football");
         }
 
         private void Basketball_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Basketballspiele werden geladen");
             MainContent.Content = new MatchView("Basketball");
         }
 
@@ -40,11 +43,13 @@ namespace Betfanaticos.UI
 
         private void MLB_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Baseballspiele werden geladen");
             MainContent.Content = new MatchView("Baseball");
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Zurück zum Hauptmenü");
             Mainwindow main = new Mainwindow();
             main.Show();
 

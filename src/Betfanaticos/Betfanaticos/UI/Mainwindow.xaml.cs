@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,7 @@ namespace Betfanaticos.UI
 
         private void Matches_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Matches Fenster öffnen");
             MatchesWindow matchesWindow = new MatchesWindow();
             matchesWindow.Show();
         }
@@ -40,12 +42,14 @@ namespace Betfanaticos.UI
 
         private void Challenges_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Challenge Fenster öffnen");
             WindowChallange windowChallange = new WindowChallange();
             windowChallange.Show();
         }
 
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Application beenden");
             Application.Current.Shutdown();
         }
     }
