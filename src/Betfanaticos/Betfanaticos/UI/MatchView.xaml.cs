@@ -20,10 +20,13 @@ namespace Betfanaticos
     /// </summary>
     public partial class MatchView : UserControl
     {
-        public MatchView()
+        private string sport;
+        public MatchView(string sportType)
         {
             InitializeComponent();
 
+        
+            sport = sportType;
             LoadMatches();
         }
 
@@ -31,10 +34,28 @@ namespace Betfanaticos
         public async void LoadMatches()
         {
             ApiService api = new ApiService();
-            List<Match> footballMatches = await api.GetFootballMatchesAsync();
-            DisplayMatches(FootballPanel, footballMatches);
+
+            List<Match> matches;
+
+            if (sport == "Basketball")
+            {
+                matches = await api.GetBasketballMatchesAsync();
+            }
+            else if (sport == "Football")
+            {
+                matches = await api.GetFootballMatchesAsync();
+            }
+            else
+            {
+                matches = await api.GetBaseballMatchesAsync();
+            }
+
+            DisplayMatches(MatchesPanel, matches);
+
+
         }
 
+        // Baut die Oberfläche aus 
         private void DisplayMatches(StackPanel panel, List<Match> matches)
         {
             panel.Children.Clear();

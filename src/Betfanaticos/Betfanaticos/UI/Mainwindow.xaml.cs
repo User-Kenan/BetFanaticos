@@ -1,5 +1,4 @@
-﻿using Betfanaticos.domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,26 +22,31 @@ namespace Betfanaticos.UI
         public MainWindow()
         {
             InitializeComponent();
-            LabelUser.Content = App.AuthService.CurrentUser.UserName;
-            LabelCredits.Content = App.AuthService.CurrentUser.Coins;
-        }
-
-          
-
-        private void ButtonBet(object sender, RoutedEventArgs e)
-        {
-            WindowMatch match = new WindowMatch();
-            match.Show();
-        }
-
-        private void ButtonChallanges(object sender, RoutedEventArgs e)
-        {
 
         }
 
-        private void ButtonStats(object sender, RoutedEventArgs e)
-        {
+        
 
+        private void Matches_Click(object sender, RoutedEventArgs e)
+        {
+            MatchesWindow matchesWindow = new MatchesWindow();
+            matchesWindow.Show();
+        }
+
+        private void Statistics_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Challenges_Click(object sender, RoutedEventArgs e)
+        {
+            WindowChallange windowChallange = new WindowChallange();
+            windowChallange.Show();
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

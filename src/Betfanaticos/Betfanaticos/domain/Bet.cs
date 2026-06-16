@@ -21,9 +21,19 @@ namespace Betfanaticos.domain
             MatchID = matchid;
             BetAmount = betamount;
             Prediction = prediction;
+            Status = BetStatus.Open;
         }
-
-        // TODO: CalculateResult methode implemetieren 
+        public void CalculateResult(string winner)
+        {
+            if (Prediction == winner)
+            {
+                Status = BetStatus.Won;
+            }
+            else
+            {
+                Status = BetStatus.Lost;
+            }
+        }
 
 
 

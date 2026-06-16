@@ -8,7 +8,7 @@ namespace Betfanaticos.domain
 {
     public enum BetStatus
     {
-        Pending,
+        Open,
         Won,
         Lost
     }

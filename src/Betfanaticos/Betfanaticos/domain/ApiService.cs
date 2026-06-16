@@ -1,58 +1,112 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Net.Http.Json;
 
 namespace Betfanaticos.domain
 {
     public class ApiService
     {
+        private readonly HttpClient _client = new();
 
-        private readonly HttpClient _client;
 
-        public ApiService()
-        {
-            _client = new HttpClient();
 
-            // API Schlüssel 
-            _client.DefaultRequestHeaders.Add("X-Auth-Token", "cc9941e4e76441ad860b0b38da3fb426");
-        }
 
 
         public async Task<List<Match>> GetFootballMatchesAsync()
         {
-            // API aufrufen 
-            string json = await _client.GetStringAsync("https://api.football-data.org/v4/competitions/PL/matches");
+            try
+            {
+                string json = await _client.GetStringAsync(
+                    "http://127.0.0.1:8000/match/football-api"
+                );
 
-            // JSON in Obejkt umwandel
-            FootballApiResponse? response =
-                JsonSerializer.Deserialize<FootballApiResponse>(
+                return JsonSerializer.Deserialize<List<Match>>(
                     json,
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
-                    });
-
-            List<Match> matches = new List<Match>();
-
-            foreach (ApiMatch apiMatch in response.Matches)
+                    }) ?? new List<Match>();
+            }
+            catch (Exception)
             {
-                Match match = new Match(
-                    apiMatch.HomeTeam.Name,
-                    apiMatch.AwayTeam.Name,
-                    "Premier League",
-                    SportType.Football,
-                    apiMatch.UtcDate    
+                MessageBox.Show(
+                    "Backend nicht erreichbar. Bitte Python/FastAPI starten.",
+                    "Verbindungsfehler",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return new List<Match>();
+            }
+        }
+
+
+
+
+
+
+        public async Task<List<Match>> GetBasketballMatchesAsync()
+        {
+            try
+            {
+                string json = await _client.GetStringAsync(
+                    "http://127.0.0.1:8000/match/basketball-api"
                 );
 
-                match.HomeScore = apiMatch.Score.FullTime.Home ?? 0;
-                match.AwayScore = apiMatch.Score.FullTime.Away ?? 0;
-
-                matches.Add(match);
+                return JsonSerializer.Deserialize<List<Match>>(
+                    json,
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }) ?? new List<Match>();
             }
+            catch
+            {
+                return new List<Match>();
+            }
+        }
 
-            return matches.OrderBy(m => m.MatchDate).Take(30).ToList();
+        public async Task<List<ChallengeDto>> GetSidequestsAsync()
+        {
+            try
+            {
+                return await _client.GetFromJsonAsync<List<ChallengeDto>>(
+                    "http://127.0.0.1:8000/sidequest/"
+                ) ?? new List<ChallengeDto>();
+            }
+            catch
+            {
+                return new List<ChallengeDto>();
+            }
+        }
+
+
+
+
+
+        public async Task<List<Match>> GetBaseballMatchesAsync()
+        {
+            try
+            {
+                string json = await _client.GetStringAsync(
+                    "http://127.0.0.1:8000/match/baseball-api"
+                );
+
+                return JsonSerializer.Deserialize<List<Match>>(
+                    json,
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }) ?? new List<Match>();
+            }
+            catch
+            {
+                return new List<Match>();
+            }
         }
     }
 }

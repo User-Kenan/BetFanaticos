@@ -1,5 +1,4 @@
-﻿using Betfanaticos.domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,29 +15,32 @@ using System.Windows.Shapes;
 namespace Betfanaticos.UI
 {
     /// <summary>
-    /// Interaction logic for WindowChallange.xaml
+    /// Interaktionslogik für MatchesWindow.xaml
     /// </summary>
-    public partial class WindowChallange : Window
+    public partial class MatchesWindow : Window
     {
-        private readonly ApiService apiService = new();
-
-        public WindowChallange()
+        public MatchesWindow()
         {
             InitializeComponent();
-            LoadChallenges();
+
+            MainContent.Content = new MatchView("Football");
         }
 
-        private async void LoadChallenges()
+        private void Games_Click(object sender, RoutedEventArgs e)
         {
-            var challenges = await apiService.GetSidequestsAsync();
+            MainContent.Content = new MatchView("Football");
+        }
 
-            ChallengesPanel.Children.Clear();
+        private void Basketball_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new MatchView("Basketball");
+        }
 
-            foreach (var challenge in challenges)
-            {
-                ChallengeCardView card = new ChallengeCardView(challenge);
-                ChallengesPanel.Children.Add(card);
-            }
+        
+
+        private void MLB_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new MatchView("Baseball");
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

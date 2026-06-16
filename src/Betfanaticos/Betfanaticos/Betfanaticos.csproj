@@ -10,14 +10,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="NewFolder\**" />
-    <Page Remove="NewFolder\**" />
+    <Compile Remove="NewFolder1\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
+    <None Remove="NewFolder1\**" />
+    <Page Remove="NewFolder1\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder1\" />
+    <None Remove="Images\HomeBackground.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\HomeBackground.png" />
   </ItemGroup>
 
 </Project>
