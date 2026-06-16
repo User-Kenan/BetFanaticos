@@ -32,4 +32,9 @@ namespace Betfanaticos.data.models
         public string api_key { get; set; }
         public UserResponse user { get; set; }
     }
+
+    public class ErrorResponse
+    {
+        public string message { get; set; }
+    }
 }

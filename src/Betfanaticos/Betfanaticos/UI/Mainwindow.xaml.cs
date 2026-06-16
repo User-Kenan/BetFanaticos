@@ -17,9 +17,9 @@ namespace Betfanaticos.UI
     /// <summary>
     /// Interaction logic for Mainwindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Mainwindow : Window
     {
-        public MainWindow()
+        public Mainwindow()
         {
             InitializeComponent();
 
@@ -27,11 +27,7 @@ namespace Betfanaticos.UI
 
         
 
-        private void Matches_Click(object sender, RoutedEventArgs e)
-        {
-            MatchesWindow matchesWindow = new MatchesWindow();
-            matchesWindow.Show();
-        }
+     
 
         private void Statistics_Click(object sender, RoutedEventArgs e)
         {
@@ -47,6 +43,14 @@ namespace Betfanaticos.UI
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void Matches_Click(object sender, RoutedEventArgs e)
+        {
+       
+            MatchesWindow matchesWindow = new MatchesWindow();
+            matchesWindow.Show();
+            
         }
     }
 }

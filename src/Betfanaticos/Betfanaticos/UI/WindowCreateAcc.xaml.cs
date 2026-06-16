@@ -1,7 +1,10 @@
-﻿using Betfanaticos.domain;
+﻿using Betfanaticos.data.models;
+using Betfanaticos.data.Services;
+using Betfanaticos.domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,45 +24,38 @@ namespace Betfanaticos.UI
     /// </summary>
     public partial class WindowCreateAcc : Window
     {
+        private readonly IAuthServiceRest authService;
+
         public WindowCreateAcc()
         {
             InitializeComponent();
+            HttpClient client = new HttpClient();
+            authService = new AuthServiceREST(client);
         }
 
-        private void Button_Create_acc(object sender, RoutedEventArgs e)
+        private async void Button_Create_acc(object sender, RoutedEventArgs e)
         {
-            string input_username = Textbox_Name.Text;
-            string input_password = Textbox_Password.Password;
-
-
-            if (string.IsNullOrWhiteSpace(input_username))
+            try
             {
-                MessageBox.Show("Ungültiger Username");
-                return;
-            }
+                var request = new UserCreate
+                {
+                    name = Textbox_Name.Text,
+                    password = Textbox_Password.Password
+                };
 
-            if (string.IsNullOrWhiteSpace(input_password))
-            {
-                MessageBox.Show("Ungültiger Passwort");
-                return;
-            }
+                var result = await authService.Register(request);
 
-            var user = App.AuthService.Register(input_username, input_password);
-
-            if (user == null)
-            {
-                MessageBox.Show("Dieser User Existiert bereits");
-                return;
-            }
-
-            MainWindow mainwindow = new MainWindow();
-            mainwindow.Show();
             
+
+                Mainwindow mainwindow = new Mainwindow();
+                mainwindow.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Register fehlgeschlagen: " + ex.Message);
+            }
         }
 
-        private void Textbox_Name_TextChanged(object sender, TextChangedEventArgs e)
-        {
-           
-        }
+      
     }
 }

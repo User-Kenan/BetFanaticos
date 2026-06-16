@@ -19,21 +19,27 @@ namespace Betfanaticos.UI
             authService = new AuthServiceREST(client);
         }
 
+        // Ki prompt : Siehe AuthServiceREST
         private async void btnLogin_Click(object sender, EventArgs e)
         {
             try
             {
-                var request = new LoginRequest
+                var request = new LoginRequest // Request wird an diese TExtböxe angebunden
                 {
                     name = txtUsername.Text,
                     password = txtPassword.Password
                 };
 
-                var result = await authService.Login(request);
+                var result = await authService.Login(request); // Login methode wird mit request Body aufgerugen an server geschcikt dann
 
-                MessageBox.Show("Login erfolgreich! Role: " + result.user.role);
+           
+
+                Mainwindow mainwindow = new Mainwindow();
+                mainwindow.Show();
+
+
             }
-            catch (Exception ex)
+            catch (Exception ex) // Falls ein fehler auftaucht
             {
                 MessageBox.Show("Login fehlgeschlagen: " + ex.Message);
             }
