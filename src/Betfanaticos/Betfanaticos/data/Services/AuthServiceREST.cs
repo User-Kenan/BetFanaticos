@@ -42,7 +42,7 @@ public class AuthServiceREST : IAuthServiceRest
 
         return content;
     }
-    //
+    
 
     public async Task<LoginResponse> Login(LoginRequest request)
     {

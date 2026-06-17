@@ -56,3 +56,9 @@ namespace Betfanaticos.UI
        
     }
 }
+            MatchesWindow matchesWindow = new MatchesWindow();
+            matchesWindow.Show();
+            
+        }
+    }
+}

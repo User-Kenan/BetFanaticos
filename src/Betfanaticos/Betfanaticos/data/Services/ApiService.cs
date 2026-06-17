@@ -28,18 +28,17 @@ namespace Betfanaticos.data.Services
                 Log.Information("Football API erfolgreich geladen");
 
 
-                // Chat von hier
-                // => JSON in Match-Objekte deserialisieren
+                
                 return JsonSerializer.Deserialize<List<Match>>(
                     json,
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     }) ?? new List<Match>();
-                // bis da
+                
 
             }
-            // Wenn die API nicht erreichbar ist, wird eine Fehlermeldung angezeigt und eine leere Liste zurückgegeben
+           
             catch (Exception)
             {
                 Log.Error("Fehler beim Laden der Football API");
