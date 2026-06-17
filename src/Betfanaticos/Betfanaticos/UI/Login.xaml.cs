@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using Betfanaticos.data.Services;
 using System.Net.Http;
 using static AuthServiceREST;
+using System.IO;
 
 namespace Betfanaticos.UI
 {
@@ -12,13 +13,12 @@ namespace Betfanaticos.UI
     {
 
         private readonly IAuthServiceRest authService;
-        bool useFakeService = true;
+        bool useFakeService = false;
         public Login()
         {
             InitializeComponent();
 
-            // Umschalten zwischen echter REST-API und Fake-Service.
-            // Beim Fake-Service wird kein FastAPI-Server benötigt.
+       
             if (useFakeService)
             {
                 authService = new FakeAuthService();
@@ -37,6 +37,7 @@ namespace Betfanaticos.UI
         // Ki prompt : Siehe AuthServiceREST
         private async void btnLogin_Click(object sender, EventArgs e)
         {
+          
             try
             {
                 // Erstellt das Request-Objekt aus den Eingaben des Benutzers.
