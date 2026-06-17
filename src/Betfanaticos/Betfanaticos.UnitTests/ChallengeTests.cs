@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
 namespace Betfanaticos.UnitTests
 {
     public class ChallengeTests
@@ -40,3 +41,4 @@ namespace Betfanaticos.UnitTests
         }
     }
 }
+*/

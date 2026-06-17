@@ -53,12 +53,6 @@ namespace Betfanaticos.UI
             Application.Current.Shutdown();
         }
 
-        private void Matches_Click(object sender, RoutedEventArgs e)
-        {
        
-            MatchesWindow matchesWindow = new MatchesWindow();
-            matchesWindow.Show();
-            
-        }
     }
 }

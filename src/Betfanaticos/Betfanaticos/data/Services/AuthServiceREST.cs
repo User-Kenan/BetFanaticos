@@ -8,6 +8,7 @@ using System.Windows;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Betfanaticos.UI;
 
 public class AuthServiceREST : IAuthServiceRest
 {
@@ -75,12 +76,19 @@ public class AuthServiceREST : IAuthServiceRest
         public static string ApiKey { get; private set; }
 
         public static bool IsLoggedIn => ApiKey != null;
+        public static ChallangeManager ChallangeManager { get; private set; }
+
 
         public static void SetUser(LoginResponse response)
         {
             UserId = response.user.userId;
             Username = response.user.name;
             ApiKey = response.api_key;
+
+            ChallangeManager = new ChallangeManager();
+
+
+
         }
 
         public static void Logout()

@@ -21,21 +21,19 @@ namespace Betfanaticos.UI
     /// </summary>
     public partial class ChallengeCardView : UserControl
     {
-        public ChallengeCardView(ChallengeDto challenge)
+        private readonly Challenge _challange;
+        public ChallengeCardView(Challenge challenge)
         {
             InitializeComponent();
 
-            TitleText.Text = challenge.challange;
-            DescriptionText.Text = challenge.description;
+            _challange = challenge;
 
-            ProgressBarChallenge.Maximum = challenge.required_amount;
-            ProgressBarChallenge.Value = challenge.current_state;
+            TitleText.Text = challenge.Title;
+            DescriptionText.Text = challenge.Description;
 
             ProgressText.Text =
-                $"{challenge.current_state}/{challenge.required_amount}";
+                $"{challenge.CurrentState}/{challenge.RequiredAmount}";
 
-            RewardText.Text =
-                $"Belohnung: {challenge.earned_coins} Coins";
         }
     }
 }

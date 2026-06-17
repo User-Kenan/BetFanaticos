@@ -1,4 +1,5 @@
-﻿using Betfanaticos.domain;
+﻿using Betfanaticos.data.Services;
+using Betfanaticos.domain;
 using Serilog;
 using System;
 using System.Collections.Generic;

@@ -10,7 +10,7 @@ namespace Betfanaticos.domain
 {
     public class Bet
     {
-        public int Id { get; set; }
+        public int Id { get; }
         public int UserID { get; set; }
         public int MatchID { get; set; }
         public int BetAmount { get; set; }

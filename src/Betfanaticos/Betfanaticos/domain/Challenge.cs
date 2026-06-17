@@ -7,45 +7,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Betfanaticos
+namespace Betfanaticos.domain
 {
     public class Challenge
     {
-        private Bet bet;
-        public int id { get; }
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public EnumChallangeType ChallengeType;
-        public int RequiredAmount { get; private set; }
+        public int Id { get; }
+        public string Title { get; }
+        public string Description { get; }
+        public EnumChallangeType ChallengeType { get; }
+        public int RequiredAmount { get; }
         public int CurrentState { get; private set; }
+        public int Reward { get; }
+        public bool RewardClaimed { get; private set; }
 
-        public Challenge(string title,string description,EnumChallangeType challengeType,int requiredAmount)
+        public Challenge(int id, string title, string description,
+            EnumChallangeType challengeType, int requiredAmount, int reward)
         {
+            Id = id;
             Title = title;
             Description = description;
             ChallengeType = challengeType;
             RequiredAmount = requiredAmount;
+            Reward = reward;
             CurrentState = 0;
-
-
+            RewardClaimed = false;
         }
 
-        public void UpdateCurrentState(int amount)
+        public void UpdateProgress(int amount)
         {
-            Log.Information("Challenge Fortschritt erhöht. Challenge");
-            CurrentState = CurrentState + amount;
+            CurrentState += amount;
+            Log.Information("Challenge Fortschritt erhöht: {Id}", Id);
         }
 
         public bool IsComplete()
-        {         
+        {
+            return CurrentState >= RequiredAmount;
+        }
 
-            if (RequiredAmount == CurrentState)
-            {
-                Log.Information("Challenge abgeschlossen");
-                return true;
-            }
 
-            return false;
+        // KI Empfehlung/erweiterung, wird gebraucht, um zu prüfen, dass bei jedem neu aufruf von Challange nicht die Belohnung gesammelt wird
+        public void ClaimReward()
+        {
+            if (!IsComplete())
+                return;
+
+            RewardClaimed = true;
+            Log.Information("Reward geclaimt für Challenge {Id}", Id);
+        }
+        public void Reset()
+        {
+            CurrentState = 0;
+            RewardClaimed = false;
         }
     }
 }
+

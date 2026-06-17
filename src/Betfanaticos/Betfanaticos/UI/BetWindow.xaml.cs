@@ -36,8 +36,6 @@ namespace Betfanaticos.UI
             HomeTeamRadio.Content = match.HomeTeam;
             AwayTeamRadio.Content = match.AwayTeam;
 
-
-
         }
 
         private void SaveBet_Click(object sender, RoutedEventArgs e)

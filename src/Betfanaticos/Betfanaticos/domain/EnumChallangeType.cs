@@ -9,7 +9,7 @@ namespace Betfanaticos.domain
     public enum EnumChallangeType
     {
         DailyLogin,
-        BetOnGame,
-        PredictScore
+        PlacePrediction,
+        CorrectPrediction
     }
 }

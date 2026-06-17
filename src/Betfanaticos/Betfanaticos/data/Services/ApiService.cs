@@ -7,9 +7,10 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using Betfanaticos.domain;
 using Serilog;
 
-namespace Betfanaticos.domain
+namespace Betfanaticos.data.Services
 {
     public class ApiService
     {
@@ -42,7 +43,7 @@ namespace Betfanaticos.domain
             catch (Exception)
             {
                 Log.Error("Fehler beim Laden der Football API");
-                MessageBox.Show("Backend nicht erreichbar. Bitte Python/FastAPI starten.", 
+                MessageBox.Show("Backend nicht erreichbar. Bitte Python/FastAPI starten.",
                     "Verbindungsfehler",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
@@ -85,18 +86,18 @@ namespace Betfanaticos.domain
 
 
 
-        public async Task<List<ChallengeDto>> GetSidequestsAsync()
+        public async Task<List<ChallangeManager>> GetSidequestsAsync()
         {
             try
             {
                 Log.Information("Challenges werden geladen");
-                return await _client.GetFromJsonAsync<List<ChallengeDto>>("http://127.0.0.1:8000/sidequest/") ?? new List<ChallengeDto>();
+                return await _client.GetFromJsonAsync<List<ChallangeManager>>("http://127.0.0.1:8000/sidequest/") ?? new List<ChallangeManager>();
                 Log.Information("Challenges erfolgreich geladen");
             }
             catch
             {
                 Log.Error("Fehler beim Laden der Challenges");
-                return new List<ChallengeDto>();
+                return new List<ChallangeManager>();
             }
         }
 

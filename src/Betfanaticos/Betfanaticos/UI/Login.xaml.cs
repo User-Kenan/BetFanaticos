@@ -12,7 +12,7 @@ namespace Betfanaticos.UI
     {
 
         private readonly IAuthServiceRest authService;
-        bool useFakeService = true;
+        bool useFakeService = false;
         public Login()
         {
             InitializeComponent();
@@ -53,6 +53,13 @@ namespace Betfanaticos.UI
 
                 // Speichert die Benutzerdaten global für die aktuelle Sitzung.
                 SessionService.SetUser(result);
+
+                SessionService.ChallangeManager.Update(
+                    EnumChallangeType.DailyLogin,
+                    1
+                );
+
+                MessageBox.Show("Sie haben eine Belohnung bekommen!");
 
                 // Öffnet das Hauptfenster nach erfolgreichem Login.
                 Mainwindow mainwindow = new Mainwindow();

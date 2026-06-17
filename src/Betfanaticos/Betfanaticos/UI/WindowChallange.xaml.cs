@@ -1,4 +1,5 @@
-﻿using Betfanaticos.domain;
+﻿using Betfanaticos.data.Services;
+using Betfanaticos.domain;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static AuthServiceREST;
 
 namespace Betfanaticos.UI
 {
@@ -21,33 +23,44 @@ namespace Betfanaticos.UI
     /// </summary>
     public partial class WindowChallange : Window
     {
-        private readonly ApiService apiService = new();
+        private ChallangeManager manager;
 
         public WindowChallange()
         {
             InitializeComponent();
-            Log.Information("Challenge Fenster geöffnet");
+
+            manager = new ChallangeManager();
+         
+
             LoadChallenges();
         }
 
-        private async void LoadChallenges()
+   
+
+        private Task LoadChallenges()
         {
             Log.Information("Challenges werden geladen");
-            var challenges = await apiService.GetSidequestsAsync();
 
             ChallengesPanel.Children.Clear();
 
-            foreach (var challenge in challenges)
+            foreach (var challenge in SessionService.ChallangeManager.Challenges)
             {
-                ChallengeCardView card = new ChallengeCardView(challenge);
-                ChallengesPanel.Children.Add(card);
+                ChallengesPanel.Children.Add(
+                    new ChallengeCardView(challenge)
+                );
             }
+
             Log.Information("Challenges erfolgreich geladen");
+
+
+
+            return Task.CompletedTask;
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             Log.Information("Zurück zum Hauptmenü");
+
             Mainwindow main = new Mainwindow();
             main.Show();
 
@@ -55,3 +68,4 @@ namespace Betfanaticos.UI
         }
     }
 }
+
