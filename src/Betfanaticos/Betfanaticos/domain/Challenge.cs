@@ -19,6 +19,8 @@ namespace Betfanaticos.domain
         public int CurrentState { get; private set; }
         public int Reward { get; }
         public bool RewardClaimed { get; private set; }
+        public DateTime? LastCompletedDate { get; set; }
+
 
         public Challenge(int id, string title, string description,
             EnumChallangeType challengeType, int requiredAmount, int reward)
@@ -48,10 +50,11 @@ namespace Betfanaticos.domain
         // KI Empfehlung/erweiterung, wird gebraucht, um zu prüfen, dass bei jedem neu aufruf von Challange nicht die Belohnung gesammelt wird
         public void ClaimReward()
         {
-            if (!IsComplete())
+            if (!IsComplete() || RewardClaimed)
                 return;
 
             RewardClaimed = true;
+            LastCompletedDate = DateTime.Today;
             Log.Information("Reward geclaimt für Challenge {Id}", Id);
         }
         public void Reset()

@@ -77,19 +77,24 @@ public class AuthServiceREST : IAuthServiceRest
 
         public static bool IsLoggedIn => ApiKey != null;
         public static ChallangeManager ChallangeManager { get; private set; }
+        public static User CurrentUser { get; private set; }
 
 
         public static void SetUser(LoginResponse response)
         {
-            UserId = response.user.userId;
-            Username = response.user.name;
-            ApiKey = response.api_key;
+            CurrentUser = new User
+            {
+                Id = response.user.userId,
+                UserName = response.user.name,
+                Coins = 0
 
+            };
+
+            ApiKey = response.api_key;
             ChallangeManager = new ChallangeManager();
 
-
-
         }
+
 
         public static void Logout()
         {

@@ -23,13 +23,12 @@ namespace Betfanaticos.UI
     /// </summary>
     public partial class WindowChallange : Window
     {
-        private ChallangeManager manager;
 
         public WindowChallange()
         {
             InitializeComponent();
 
-            manager = new ChallangeManager();
+           
          
 
             LoadChallenges();
