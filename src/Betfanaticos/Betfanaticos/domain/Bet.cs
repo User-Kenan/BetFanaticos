@@ -1,53 +1,34 @@
-﻿using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Serilog;
 
 namespace Betfanaticos.domain
 {
     public class Bet
     {
-        public int Id { get; }
+        public int Id { get; set; }
         public int UserID { get; set; }
         public int MatchID { get; set; }
         public int BetAmount { get; set; }
         public string Prediction { get; set; }
+        public double Odds { get; set; }
         public BetStatus Status { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public Bet(int userid, int matchid, int betamount, string prediction)
+        public Bet(int userId, int matchId, int betAmount, string prediction, double odds)
         {
-            UserID = userid;
-            MatchID = matchid;
-            BetAmount = betamount;
+            UserID = userId;
+            MatchID = matchId;
+            BetAmount = betAmount;
             Prediction = prediction;
+            Odds = odds;
             Status = BetStatus.Open;
+            CreatedAt = DateTime.Now;
         }
 
-        public int CalculateResult(string winner)
+        public int CalculateWin()
         {
-            Log.Information("Ergebnis wird berechnet");
-
-            if (Prediction == winner)
-            {
-                Log.Information("Wette gewonnen");
-                Status = BetStatus.Won;
-
-                return BetAmount * 2;
-            }
-            else
-            {
-                Log.Information("Wette verloren");
-                Status = BetStatus.Lost;
-
-                return 0;
-            }
+            Log.Information("Gewinn wird berechnet");
+            return (int)(BetAmount * Odds);
         }
-
-
-
-
     }
 }

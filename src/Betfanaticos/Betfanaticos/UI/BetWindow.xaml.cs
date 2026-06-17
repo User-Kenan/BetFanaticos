@@ -13,7 +13,6 @@ namespace Betfanaticos.UI
         private readonly Action updateCoinsDisplay;
 
         private readonly IBetService betService = new FakeBetService();
-        private readonly CoinStorageService coinStorage = new CoinStorageService();
 
         public BetWindow(Match selectedMatch, User user, Action updateCoins)
         {
@@ -24,11 +23,13 @@ namespace Betfanaticos.UI
             updateCoinsDisplay = updateCoins;
 
             MatchText.Text = $"{match.HomeTeam} vs {match.AwayTeam}";
-            HomeTeamRadio.Content = match.HomeTeam;
-            AwayTeamRadio.Content = match.AwayTeam;
+
+            HomeTeamRadio.Content = $"{match.HomeTeam} | Quote: {match.HomeOdds}";
+            DrawRadio.Content = $"Unentschieden | Quote: {match.DrawOdds}";
+            AwayTeamRadio.Content = $"{match.AwayTeam} | Quote: {match.AwayOdds}";
         }
 
-        private void SaveBet_Click(object sender, RoutedEventArgs e)
+        private async void SaveBet_Click(object sender, RoutedEventArgs e)
         {
             Log.Information("Wette wird gespeichert");
 
@@ -39,14 +40,22 @@ namespace Betfanaticos.UI
             }
 
             string prediction;
+            double selectedOdds;
 
             if (HomeTeamRadio.IsChecked == true)
             {
-                prediction = HomeTeamRadio.Content.ToString();
+                prediction = match.HomeTeam;
+                selectedOdds = match.HomeOdds;
+            }
+            else if (DrawRadio.IsChecked == true)
+            {
+                prediction = "Draw";
+                selectedOdds = match.DrawOdds;
             }
             else if (AwayTeamRadio.IsChecked == true)
             {
-                prediction = AwayTeamRadio.Content.ToString();
+                prediction = match.AwayTeam;
+                selectedOdds = match.AwayOdds;
             }
             else
             {
@@ -60,34 +69,65 @@ namespace Betfanaticos.UI
                     currentUser,
                     match,
                     amount,
-                    prediction
+                    prediction,
+                    selectedOdds
                 );
+
+                if (match.Status != MatchStatus.Finished)
+                {
+                    WalletServiceREST walletServiceOpen = new WalletServiceREST();
+                    await walletServiceOpen.UpdateWalletByUserId(currentUser.Id, currentUser.Coins);
+
+                    updateCoinsDisplay();
+
+                    MessageBox.Show(
+                        $"Wette wurde gespeichert.\n" +
+                        $"Das Spiel ist noch nicht beendet.\n" +
+                        $"Neue Coins: {currentUser.Coins}"
+                    );
+
+                    Close();
+                    return;
+                }
+
+                string winner;
 
                 if (match.HomeScore > match.AwayScore)
                 {
-                    string winner = match.HomeTeam;
-
-                    int wonCoins = bet.CalculateResult(winner);
-                    currentUser.AddCoins(wonCoins);
+                    winner = match.HomeTeam;
                 }
                 else if (match.AwayScore > match.HomeScore)
                 {
-                    string winner = match.AwayTeam;
+                    winner = match.AwayTeam;
+                }
+                else
+                {
+                    winner = "Draw";
+                }
 
-                    int wonCoins = bet.CalculateResult(winner);
+                if (prediction == winner)
+                {
+                    bet.Status = BetStatus.Won;
+
+                    int wonCoins = (int)(amount * selectedOdds);
                     currentUser.AddCoins(wonCoins);
+
+                    MessageBox.Show($"Wette gewonnen!\nGewinn: {wonCoins}\nNeue Coins: {currentUser.Coins}");
                 }
                 else
                 {
                     bet.Status = BetStatus.Lost;
+
+                    MessageBox.Show($"Wette verloren!\nNeue Coins: {currentUser.Coins}");
                 }
 
-                coinStorage.SaveCoins(currentUser);
+                WalletServiceREST walletService = new WalletServiceREST();
+                await walletService.UpdateWalletByUserId(currentUser.Id, currentUser.Coins);
+
                 updateCoinsDisplay();
 
                 Log.Information("Wette erfolgreich platziert");
 
-                MessageBox.Show($"Wette platziert!\nNeue Coins: {currentUser.Coins}");
                 Close();
             }
             catch (Exception ex)

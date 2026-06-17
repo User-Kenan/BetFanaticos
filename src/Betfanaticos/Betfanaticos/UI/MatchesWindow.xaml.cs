@@ -9,15 +9,21 @@ namespace Betfanaticos.UI
     public partial class MatchesWindow : Window
     {
         private User currentUser;
-        private CoinStorageService coinStorage = new CoinStorageService();
 
         public MatchesWindow()
         {
             InitializeComponent();
+            LoadUserWallet();
+        }
 
+        private async void LoadUserWallet()
+        {
             currentUser = SessionService.CurrentUser;
 
-            coinStorage.LoadCoins(currentUser);
+            WalletServiceREST walletService = new WalletServiceREST();
+            var wallet = await walletService.GetWalletByUserId(currentUser.Id);
+
+            currentUser.Coins = (int)wallet.coins;
 
             UpdateCoinsDisplay();
 
@@ -50,8 +56,6 @@ namespace Betfanaticos.UI
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             Log.Information("Zurück zum Hauptmenü");
-
-            coinStorage.SaveCoins(currentUser);
 
             Mainwindow main = new Mainwindow();
             main.Show();
