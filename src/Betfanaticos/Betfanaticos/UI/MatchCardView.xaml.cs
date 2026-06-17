@@ -2,37 +2,24 @@
 using Betfanaticos.UI;
 using Serilog;
 using System;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
 
 namespace Betfanaticos
 {
-    /// <summary>
-    /// Interaktionslogik für MatchCardView.xaml
-    /// </summary>
     public partial class MatchCardView : UserControl
     {
-        
-
-        public MatchCardView()
-        {
-            InitializeComponent();
-        }
-
         private Match? currentMatch;
         private User currentUser;
+        private Action updateCoinsDisplay;
+
+        public MatchCardView(User user, Action updateCoins)
+        {
+            InitializeComponent();
+
+            currentUser = user;
+            updateCoinsDisplay = updateCoins;
+        }
 
         public void DisplayMatch(Match match)
         {
@@ -41,23 +28,20 @@ namespace Betfanaticos
             currentMatch = match;
 
             TeamsText.Text = $"{match.HomeTeam} vs {match.AwayTeam}";
-
             DateText.Text = match.MatchDate.ToString("dd.MM.yyyy HH:mm");
-
-          
         }
 
         private void BetButton_Click(object sender, RoutedEventArgs e)
         {
             Log.Information("Wettfenster wird geöffnet");
+
             if (currentMatch == null)
             {
-                Log.Error("Keine Matche verfügbar");
+                Log.Error("Kein Match verfügbar");
                 return;
             }
-                
 
-            BetWindow betWindow = new BetWindow(currentMatch, currentUser);
+            BetWindow betWindow = new BetWindow(currentMatch, currentUser, updateCoinsDisplay);
             betWindow.ShowDialog();
         }
     }
