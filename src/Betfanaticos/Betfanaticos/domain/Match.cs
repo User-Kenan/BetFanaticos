@@ -17,7 +17,10 @@ namespace Betfanaticos.domain
         public int HomeScore { get; set; }
         public SportType Sport { get; set; }
         public MatchStatus Status { get; set; }
-     
+        public double HomeOdds { get; set; }
+        public double AwayOdds { get; set; }
+        public double DrawOdds { get; set; }
+
 
 
         public Match(string hometeam, string awayteam, string league, SportType sport, DateTime matchdate)
