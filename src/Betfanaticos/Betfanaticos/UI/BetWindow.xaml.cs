@@ -28,7 +28,7 @@ namespace Betfanaticos.UI
             AwayTeamRadio.Content = match.AwayTeam;
         }
 
-        private void SaveBet_Click(object sender, RoutedEventArgs e)
+        private async void SaveBet_Click(object sender, RoutedEventArgs e)
         {
             Log.Information("Wette wird gespeichert");
 
@@ -82,7 +82,9 @@ namespace Betfanaticos.UI
                     bet.Status = BetStatus.Lost;
                 }
 
-                coinStorage.SaveCoins(currentUser);
+                WalletServiceREST walletService = new WalletServiceREST();
+                await walletService.UpdateWalletByUserId(currentUser.Id, currentUser.Coins);
+
                 updateCoinsDisplay();
 
                 Log.Information("Wette erfolgreich platziert");
