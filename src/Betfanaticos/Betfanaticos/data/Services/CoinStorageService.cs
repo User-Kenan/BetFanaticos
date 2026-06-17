@@ -4,6 +4,7 @@ using Betfanaticos.domain;
 
 namespace Betfanaticos.data.Services
 {
+    // Coins speicher und Laden 
     public class CoinStorageService
     {
         private string GetFilePath(User user)

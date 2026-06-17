@@ -25,20 +25,24 @@ namespace Betfanaticos.domain
             Prediction = prediction;
             Status = BetStatus.Open;
         }
-        public void CalculateResult(string winner)
-        {
-            
 
+        public int CalculateResult(string winner)
+        {
             Log.Information("Ergebnis wird berechnet");
+
             if (Prediction == winner)
             {
                 Log.Information("Wette gewonnen");
                 Status = BetStatus.Won;
+
+                return BetAmount * 2;
             }
             else
             {
-                Log.Information("Verloren");
+                Log.Information("Wette verloren");
                 Status = BetStatus.Lost;
+
+                return 0;
             }
         }
 

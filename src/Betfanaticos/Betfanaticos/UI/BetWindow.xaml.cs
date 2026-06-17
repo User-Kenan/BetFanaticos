@@ -63,6 +63,25 @@ namespace Betfanaticos.UI
                     prediction
                 );
 
+                if (match.HomeScore > match.AwayScore)
+                {
+                    string winner = match.HomeTeam;
+
+                    int wonCoins = bet.CalculateResult(winner);
+                    currentUser.AddCoins(wonCoins);
+                }
+                else if (match.AwayScore > match.HomeScore)
+                {
+                    string winner = match.AwayTeam;
+
+                    int wonCoins = bet.CalculateResult(winner);
+                    currentUser.AddCoins(wonCoins);
+                }
+                else
+                {
+                    bet.Status = BetStatus.Lost;
+                }
+
                 coinStorage.SaveCoins(currentUser);
                 updateCoinsDisplay();
 
