@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Betfanaticos.data.Services
 {
     using Betfanaticos.data.models;
+    using Betfanaticos.domain;
     using static AuthServiceREST;
 
     public class FakeAuthService : IAuthServiceRest
@@ -22,6 +23,13 @@ namespace Betfanaticos.data.Services
                     name = request.name,
                     role = "user"
                 }
+            };
+
+            var currentUser = new User
+            {
+                Id = response.user.userId,
+                UserName = response.user.name,
+                Coins = 0
             };
 
             SessionService.SetUser(response);

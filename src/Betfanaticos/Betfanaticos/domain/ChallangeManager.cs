@@ -13,9 +13,9 @@ namespace Betfanaticos.domain
        
         public List<Challenge> Challenges { get; } = new();
 
-        public void AddChallenge(Challenge challenge)
+        public ChallangeManager()
         {
-            Challenges.Add(challenge);
+            SeedDefaultChallenges();
         }
 
         public void Update(EnumChallangeType type, int amount)
@@ -28,7 +28,7 @@ namespace Betfanaticos.domain
 
                     if (c.IsComplete() && !c.RewardClaimed)
                     {
-                        //User.Curren.AddCoins(c.Reward);
+                        SessionService.CurrentUser.AddCoins(c.Reward);
                         c.ClaimReward();
                         Log.Information("Challenge abgeschlossen: {Title}", c.Title);
                     }
