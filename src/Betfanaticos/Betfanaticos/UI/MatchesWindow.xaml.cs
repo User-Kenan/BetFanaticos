@@ -2,6 +2,7 @@
 using Betfanaticos.domain;
 using Serilog;
 using System.Windows;
+using static AuthServiceREST;
 
 namespace Betfanaticos.UI
 {
@@ -14,7 +15,7 @@ namespace Betfanaticos.UI
         {
             InitializeComponent();
 
-            currentUser = new User("TestUser", "1234", "Kein Team", 1000);
+            currentUser = SessionService.CurrentUser;
 
             coinStorage.LoadCoins(currentUser);
 
