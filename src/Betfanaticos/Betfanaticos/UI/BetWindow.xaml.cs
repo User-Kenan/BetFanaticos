@@ -10,19 +10,22 @@ namespace Betfanaticos.UI
     {
         private readonly Match match;
         private readonly User currentUser;
-        private readonly IBetService betService = new FakeBetService();
+        private readonly Action updateCoinsDisplay;
 
-        public BetWindow(Match selectedMatch, User user)
+        private readonly IBetService betService = new FakeBetService();
+        private readonly CoinStorageService coinStorage = new CoinStorageService();
+
+        public BetWindow(Match selectedMatch, User user, Action updateCoins)
         {
             InitializeComponent();
 
             match = selectedMatch;
             currentUser = user;
+            updateCoinsDisplay = updateCoins;
 
             MatchText.Text = $"{match.HomeTeam} vs {match.AwayTeam}";
             HomeTeamRadio.Content = match.HomeTeam;
             AwayTeamRadio.Content = match.AwayTeam;
-
         }
 
         private void SaveBet_Click(object sender, RoutedEventArgs e)
@@ -31,7 +34,6 @@ namespace Betfanaticos.UI
 
             if (!int.TryParse(AmountTextBox.Text, out int amount))
             {
-                Log.Error("Kein gültiger Betrag wurde eingegeben");
                 MessageBox.Show("Bitte gültigen Betrag eingeben.");
                 return;
             }
@@ -60,6 +62,9 @@ namespace Betfanaticos.UI
                     amount,
                     prediction
                 );
+
+                coinStorage.SaveCoins(currentUser);
+                updateCoinsDisplay();
 
                 Log.Information("Wette erfolgreich platziert");
 

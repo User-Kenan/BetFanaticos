@@ -28,7 +28,7 @@ namespace Betfanaticos.domain
 
                     if (c.IsComplete() && !c.RewardClaimed)
                     {
-                        User.Curren.AddCoins(c.Reward);
+                        //User.Curren.AddCoins(c.Reward);
                         c.ClaimReward();
                         Log.Information("Challenge abgeschlossen: {Title}", c.Title);
                     }

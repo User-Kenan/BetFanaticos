@@ -12,7 +12,7 @@ namespace Betfanaticos.UI
     {
 
         private readonly IAuthServiceRest authService;
-        bool useFakeService = false;
+        bool useFakeService = true;
         public Login()
         {
             InitializeComponent();

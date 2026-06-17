@@ -74,6 +74,21 @@
 
         </StackPanel>
 
+        <Border Grid.Row="0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0,0,30,0"
+                Background="#FF3B2D80"
+                CornerRadius="20"
+                Padding="20,10">
+
+            <TextBlock x:Name="CoinsText"
+                       Text="$ 1000"
+                       Foreground="Gold"
+                       FontSize="26"
+                       FontWeight="Bold"/>
+        </Border>
+
         <!-- Inhalt -->
         <Border Grid.Row="1"
                 Background="#FF2A225A"
