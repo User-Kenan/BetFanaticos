@@ -25,10 +25,6 @@ namespace Betfanaticos.domain
             CreatedAt = DateTime.Now;
         }
 
-        public int CalculateWin()
-        {
-            Log.Information("Gewinn wird berechnet");
-            return (int)(BetAmount * Odds);
-        }
+        
     }
 }

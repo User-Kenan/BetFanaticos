@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using Betfanaticos.domain;
+using System.IO;
+using System.Runtime.ConstrainedExecution;
 using System.Text.Json;
-using Betfanaticos.domain;
 
 namespace Betfanaticos.data.Services
 {
-    // Coins speicher und Laden 
+    // Der CoinStorageService speichert und lädt die Coins eines Benutzers aus einer JSON-Datei.
     public class CoinStorageService
     {
         private string GetFilePath(User user)
