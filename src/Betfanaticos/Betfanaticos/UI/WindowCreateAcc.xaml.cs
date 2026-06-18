@@ -1,27 +1,11 @@
 ﻿using Betfanaticos.data.models;
 using Betfanaticos.data.Services;
-using Betfanaticos.domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Betfanaticos.UI
 {
-    /// <summary>
-    /// Interaction logic for WindowCreateAcc.xaml
-    /// </summary>
     public partial class WindowCreateAcc : Window
     {
         private readonly IAuthServiceRest authService;
@@ -29,7 +13,12 @@ namespace Betfanaticos.UI
         public WindowCreateAcc()
         {
             InitializeComponent();
-            HttpClient client = new HttpClient();
+
+            HttpClient client = new HttpClient
+            {
+                BaseAddress = new Uri("http://127.0.0.1:8000/")
+            };
+
             authService = new AuthServiceREST(client);
         }
 
@@ -43,19 +32,19 @@ namespace Betfanaticos.UI
                     password = Textbox_Password.Password
                 };
 
-                var result = await authService.Register(request);
+                await authService.Register(request);
 
-            
+                MessageBox.Show("Account erfolgreich erstellt.");
 
                 Login login = new Login();
                 login.Show();
+
+                this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Register fehlgeschlagen: " + ex.Message);
             }
         }
-
-      
     }
 }

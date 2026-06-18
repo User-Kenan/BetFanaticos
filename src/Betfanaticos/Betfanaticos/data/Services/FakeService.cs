@@ -32,7 +32,7 @@ namespace Betfanaticos.data.Services
                 Coins = 0
             };
 
-            SessionService.SetUser(response);
+            SessionService.SetUserAsync(response);
 
             return Task.FromResult(response);
         }

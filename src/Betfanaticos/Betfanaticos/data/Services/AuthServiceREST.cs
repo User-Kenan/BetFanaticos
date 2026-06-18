@@ -17,7 +17,6 @@ public class AuthServiceREST : IAuthServiceRest
     public AuthServiceREST(HttpClient client)
     {
         this.client = client;
-        client.BaseAddress = new Uri("http://127.0.0.1:8000/");
     }
 
 
@@ -69,38 +68,5 @@ public class AuthServiceREST : IAuthServiceRest
         return JsonSerializer.Deserialize<UserResponse>(content)!;
     }
 
-    public static class SessionService
-    {
-        public static int UserId { get; private set; }
-        public static string Username { get; private set; }
-        public static string ApiKey { get; private set; }
-
-        public static bool IsLoggedIn => ApiKey != null;
-        public static ChallangeManager ChallangeManager { get; private set; }
-        public static User CurrentUser { get; private set; }
-
-
-        public static void SetUser(LoginResponse response)
-        {
-            CurrentUser = new User
-            {
-                Id = response.user.userId,
-                UserName = response.user.name,
-                Coins = 0
-
-            };
-
-            ApiKey = response.api_key;
-            ChallangeManager = new ChallangeManager();
-
-        }
-
-
-        public static void Logout()
-        {
-            UserId = 0;
-            Username = null;
-            ApiKey = null;
-        }
-    }
+    
 }

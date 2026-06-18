@@ -1,71 +1,68 @@
-﻿using Serilog;
+﻿using Betfanaticos.data.Services;
+using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using static AuthServiceREST;
 
 namespace Betfanaticos.domain
 {
     public class ChallangeManager
     {
-       
+        private readonly ChallengeServiceREST challengeService;
+
         public List<Challenge> Challenges { get; } = new();
 
-        public ChallangeManager()
+        public ChallangeManager(ChallengeServiceREST challengeService)
         {
-            SeedDefaultChallenges();
+            this.challengeService = challengeService;
         }
 
-        public void Update(EnumChallangeType type, int amount)
+        public async Task LoadChallengesAsync()
         {
-            foreach (var c in Challenges)
-            {
-                if(c.ChallengeType == type)
-                {
-                    c.UpdateProgress(amount);
+            Challenges.Clear();
 
-                    if (c.IsComplete() && !c.RewardClaimed)
-                    {
-                        SessionService.CurrentUser.AddCoins(c.Reward);
-                        c.ClaimReward();
-                        Log.Information("Challenge abgeschlossen: {Title}", c.Title);
-                    }
-                }
+            var dbChallenges = await challengeService.GetUserChallengesAsync(
+                SessionService.CurrentUser.Id
+            );
+
+            foreach (var c in dbChallenges)
+            {
+                Challenges.Add(new Challenge(
+                    c.Id,
+                    c.Type,
+                    c.Description,
+                    Enum.Parse<EnumChallangeType>(c.Type),
+                    c.RequiredAmount,
+                    c.Reward,
+                    c.CurrentState,
+                    c.RewardClaimed
+                ));
             }
         }
 
-        private void SeedDefaultChallenges()
+        public async Task UpdateAsync(EnumChallangeType type, int amount)
         {
-            Challenges.Add(new Challenge(
-                1,
-                "Daily Login",
-                "Logge dich einmal ein",
-                EnumChallangeType.DailyLogin,
-                1,
-                25
-            ));
+            foreach (var c in Challenges)
+            {
+                if (c.ChallengeType == type)
+                {
+                    var updatedChallenge = await challengeService.UpdateChallengeAsync(
+                        SessionService.CurrentUser.Id,
+                        c.Id,
+                        amount
+                    );
 
-            Challenges.Add(new Challenge(
-                2,
-                "3 Predictions",
-                "Gib 3 Predictions ab",
-                EnumChallangeType.PlacePrediction,
-                3,
-                100
-            ));
+                    c.SetProgressFromDatabase(
+                        updatedChallenge.CurrentState,
+                        updatedChallenge.RewardClaimed
+                    );
 
-            Challenges.Add(new Challenge(
-                3,
-                "Lucky Prediction",
-                "Treffe 1 richtige Prediction",
-                EnumChallangeType.CorrectPrediction,
-                1,
-                50
-            ));
+                    await SessionService.ReloadCoinsAsync();
+
+                    Log.Information("Challenge aktualisiert: {Title}", c.Title);
+                    break;
+                }
+            }
         }
-
-
     }
 }

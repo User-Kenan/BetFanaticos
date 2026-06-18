@@ -2,6 +2,7 @@
 using Betfanaticos.domain;
 using Serilog;
 using System;
+using System.Net.Http;
 using System.Windows;
 
 namespace Betfanaticos.UI
@@ -12,7 +13,8 @@ namespace Betfanaticos.UI
         private readonly User currentUser;
         private readonly Action updateCoinsDisplay;
 
-        private readonly IBetService betService = new FakeBetService();
+        private readonly IBetService betService;
+        private readonly bool useFakeService = false;
 
         public BetWindow(Match selectedMatch, User user, Action updateCoins)
         {
@@ -21,6 +23,20 @@ namespace Betfanaticos.UI
             match = selectedMatch;
             currentUser = user;
             updateCoinsDisplay = updateCoins;
+
+            if (useFakeService)
+            {
+                betService = new FakeBetService();
+            }
+            else
+            {
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri("http://127.0.0.1:8000/")
+                };
+
+                betService = new BetServiceREST(client);
+            }
 
             MatchText.Text = $"{match.HomeTeam} vs {match.AwayTeam}";
 
@@ -65,7 +81,7 @@ namespace Betfanaticos.UI
 
             try
             {
-                Bet bet = betService.PlaceBet(
+                Bet bet = await betService.PlaceBet(
                     currentUser,
                     match,
                     amount,
@@ -73,11 +89,22 @@ namespace Betfanaticos.UI
                     selectedOdds
                 );
 
+                if (useFakeService)
+                {
+                    WalletServiceREST fakeWalletService = new WalletServiceREST();
+                    await fakeWalletService.UpdateWalletByUserId(currentUser.Id, currentUser.Coins);
+                }
+
+                await SessionService.ChallangeManager.UpdateAsync(
+                    EnumChallangeType.PlacePrediction,
+                    1
+                );
+
+                await SessionService.ChallangeManager.LoadChallengesAsync();
+                await SessionService.ReloadCoinsAsync();
+
                 if (match.Status != MatchStatus.Finished)
                 {
-                    WalletServiceREST walletServiceOpen = new WalletServiceREST();
-                    await walletServiceOpen.UpdateWalletByUserId(currentUser.Id, currentUser.Coins);
-
                     updateCoinsDisplay();
 
                     MessageBox.Show(
@@ -112,19 +139,38 @@ namespace Betfanaticos.UI
                     int wonCoins = (int)(amount * selectedOdds);
                     currentUser.AddCoins(wonCoins);
 
-                    MessageBox.Show($"Wette gewonnen!\nGewinn: {wonCoins}\nNeue Coins: {currentUser.Coins}");
+                    WalletServiceREST walletService = new WalletServiceREST();
+                    await walletService.UpdateWalletByUserId(currentUser.Id, currentUser.Coins);
+
+                    await SessionService.ChallangeManager.UpdateAsync(
+                        EnumChallangeType.CorrectPrediction,
+                        1
+                    );
+
+                    await SessionService.ChallangeManager.LoadChallengesAsync();
+                    await SessionService.ReloadCoinsAsync();
+
+                    updateCoinsDisplay();
+
+                    MessageBox.Show(
+                        $"Wette gewonnen!\n" +
+                        $"Gewinn: {wonCoins}\n" +
+                        $"Neue Coins: {currentUser.Coins}"
+                    );
                 }
                 else
                 {
                     bet.Status = BetStatus.Lost;
 
-                    MessageBox.Show($"Wette verloren!\nNeue Coins: {currentUser.Coins}");
+                    await SessionService.ReloadCoinsAsync();
+
+                    updateCoinsDisplay();
+
+                    MessageBox.Show(
+                        $"Wette verloren!\n" +
+                        $"Neue Coins: {currentUser.Coins}"
+                    );
                 }
-
-                WalletServiceREST walletService = new WalletServiceREST();
-                await walletService.UpdateWalletByUserId(currentUser.Id, currentUser.Coins);
-
-                updateCoinsDisplay();
 
                 Log.Information("Wette erfolgreich platziert");
 

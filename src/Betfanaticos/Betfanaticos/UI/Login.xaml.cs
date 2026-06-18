@@ -4,7 +4,7 @@ using System.Windows;
 using System.Xml.Linq;
 using Betfanaticos.data.Services;
 using System.Net.Http;
-using static AuthServiceREST;
+using static Betfanaticos.data.Services.SessionService;
 using System.IO;
 
 namespace Betfanaticos.UI
@@ -53,14 +53,24 @@ namespace Betfanaticos.UI
                 var result = await authService.Login(request);
 
                 // Speichert die Benutzerdaten global für die aktuelle Sitzung.
-                SessionService.SetUser(result);
+                SessionService.SetUserAsync(result);
 
-                SessionService.ChallangeManager.Update(
+                await SessionService.ChallangeManager.LoadChallengesAsync();
+
+                await SessionService.ChallangeManager.UpdateAsync(
                     EnumChallangeType.DailyLogin,
                     1
                 );
 
-                MessageBox.Show("Sie haben eine Belohnung bekommen!");
+                await SessionService.SetUserAsync(result);
+
+                await SessionService.ChallangeManager.UpdateAsync(
+                    EnumChallangeType.DailyLogin,
+                    1
+                );
+
+                await SessionService.ReloadCoinsAsync();
+
 
                 // Öffnet das Hauptfenster nach erfolgreichem Login.
                 Mainwindow mainwindow = new Mainwindow();

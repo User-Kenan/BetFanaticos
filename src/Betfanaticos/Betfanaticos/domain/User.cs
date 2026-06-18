@@ -11,11 +11,11 @@ namespace Betfanaticos.domain
         public int Id { get; set; }
         public string UserName { get; set; }
         public string PasswortHash { get; set; }
-        public int Coins { get; set; }
+        public double Coins { get; set; }
         public string FavouriteTeam { get; set; }
 
 
-        public User(string username, string passwordHash, string favouriteTeam, int coins)
+        public User(string username, string passwordHash, string favouriteTeam, double coins)
         {
             UserName = username;
             PasswortHash = passwordHash;
@@ -29,13 +29,13 @@ namespace Betfanaticos.domain
         }
 
 
-        public int AddCoins(int coins)
+        public double AddCoins(double coins)
         {
             Coins += coins;
             return Coins;
         }
 
-        public bool RemoveCoins(int coins)
+        public bool RemoveCoins(double coins)
         {
             if (coins <= 0)
             {

@@ -4,7 +4,7 @@ namespace Betfanaticos.data.Services
 {
     public class FakeBetService : IBetService
     {
-        public Bet PlaceBet(User user, Match match, int amount, string prediction, double odds)
+        public Task<Bet> PlaceBet(User user, Match match, int amount, string prediction, double odds)
         {
             if (amount <= 0)
                 throw new Exception("Betrag muss größer als 0 sein.");
@@ -22,7 +22,7 @@ namespace Betfanaticos.data.Services
                 odds
             );
 
-            return bet;
+            return Task.FromResult(bet);
         }
     }
 }

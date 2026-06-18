@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using Betfanaticos.data.models;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -55,16 +56,5 @@ namespace Betfanaticos.data.Services
         }
     }
 
-    public class WalletCreate
-    {
-        public int user_id { get; set; }
-        public double coins { get; set; }
-    }
-
-    public class WalletResponse
-    {
-        public int wallet_id { get; set; }
-        public int user_id { get; set; }
-        public double coins { get; set; }
-    }
+   
 }

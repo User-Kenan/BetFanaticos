@@ -1,44 +1,36 @@
 ﻿using Betfanaticos.data.Services;
-using Betfanaticos.domain;
 using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static AuthServiceREST;
 
 namespace Betfanaticos.UI
 {
-    /// <summary>
-    /// Interaction logic for WindowChallange.xaml
-    /// </summary>
     public partial class WindowChallange : Window
     {
-
         public WindowChallange()
         {
             InitializeComponent();
-
-           
-         
-
-            LoadChallenges();
+            Loaded += WindowChallange_Loaded;
         }
 
-   
+        private async void WindowChallange_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await LoadChallengesAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Challenges konnten nicht geladen werden: " + ex.Message);
+            }
+        }
 
-        private Task LoadChallenges()
+        private async Task LoadChallengesAsync()
         {
             Log.Information("Challenges werden geladen");
+
+            await SessionService.ChallangeManager.LoadChallengesAsync();
 
             ChallengesPanel.Children.Clear();
 
@@ -50,10 +42,6 @@ namespace Betfanaticos.UI
             }
 
             Log.Information("Challenges erfolgreich geladen");
-
-
-
-            return Task.CompletedTask;
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -67,4 +55,3 @@ namespace Betfanaticos.UI
         }
     }
 }
-

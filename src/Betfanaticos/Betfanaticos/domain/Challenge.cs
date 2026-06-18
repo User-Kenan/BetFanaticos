@@ -22,8 +22,15 @@ namespace Betfanaticos.domain
         public DateTime? LastCompletedDate { get; set; }
 
 
-        public Challenge(int id, string title, string description,
-            EnumChallangeType challengeType, int requiredAmount, int reward)
+        public Challenge(
+            int id,
+            string title,
+            string description,
+            EnumChallangeType challengeType,
+            int requiredAmount,
+            int reward,
+            int currentState = 0,
+            bool rewardClaimed = false)
         {
             Id = id;
             Title = title;
@@ -31,8 +38,14 @@ namespace Betfanaticos.domain
             ChallengeType = challengeType;
             RequiredAmount = requiredAmount;
             Reward = reward;
-            CurrentState = 0;
-            RewardClaimed = false;
+            CurrentState = currentState;
+            RewardClaimed = rewardClaimed;
+        }
+
+        public void SetProgressFromDatabase(int currentState, bool rewardClaimed)
+        {
+            CurrentState = currentState;
+            RewardClaimed = rewardClaimed;
         }
 
         public void UpdateProgress(int amount)
