@@ -3,16 +3,15 @@ using Betfanaticos.domain;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace Betfanaticos
 {
     public partial class MatchView : UserControl
     {
-        private string sport;
-        private User currentUser;
-        private Action updateCoinsDisplay;
+        private readonly string sport;
+        private readonly User currentUser;
+        private readonly Action updateCoinsDisplay;
 
         public MatchView(string sportType, User user, Action updateCoins)
         {
@@ -48,26 +47,6 @@ namespace Betfanaticos
             }
 
             Log.Information("Matches erfolgreich geladen");
-
-            try
-            {
-                BetServiceREST betServiceREST = new BetServiceREST();
-                int wonCoins = await betServiceREST.EvaluateOpenBets(currentUser, matches);
-
-                if (wonCoins > 0)
-                {
-                    WalletServiceREST walletService = new WalletServiceREST();
-                    await walletService.UpdateWalletByUserId(currentUser.Id, currentUser.Coins);
-
-                    updateCoinsDisplay();
-
-                    MessageBox.Show($"Offene Wetten ausgewertet!\nGewinn: {wonCoins} Coins");
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Offene Wetten konnten nicht ausgewertet werden");
-            }
 
             DisplayMatches(MatchesPanel, matches);
         }

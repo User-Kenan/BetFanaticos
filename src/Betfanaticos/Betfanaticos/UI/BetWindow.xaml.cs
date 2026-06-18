@@ -89,7 +89,6 @@ namespace Betfanaticos.UI
                     selectedOdds
                 );
 
-<<<<<<< HEAD
                 if (useFakeService)
                 {
                     WalletServiceREST fakeWalletService = new WalletServiceREST();
@@ -104,20 +103,7 @@ namespace Betfanaticos.UI
                 await SessionService.ChallangeManager.LoadChallengesAsync();
                 await SessionService.ReloadCoinsAsync();
 
-                if (match.Status != MatchStatus.Finished)
-=======
-                BetServiceREST betServiceREST = new BetServiceREST();
-
-                await betServiceREST.SaveBet(
-                    currentUser,
-                    match,
-                    amount,
-                    prediction,
-                    selectedOdds
-                );
-
                 if (match.Status != "Finished")
->>>>>>> 75b52083a9a23edc11df3d54be9f81dcd96750ee
                 {
                     updateCoinsDisplay();
 
