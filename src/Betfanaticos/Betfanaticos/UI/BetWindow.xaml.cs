@@ -73,7 +73,17 @@ namespace Betfanaticos.UI
                     selectedOdds
                 );
 
-                if (match.Status != MatchStatus.Finished)
+                BetServiceREST betServiceREST = new BetServiceREST();
+
+                await betServiceREST.SaveBet(
+                    currentUser,
+                    match,
+                    amount,
+                    prediction,
+                    selectedOdds
+                );
+
+                if (match.Status != "Finished")
                 {
                     WalletServiceREST walletServiceOpen = new WalletServiceREST();
                     await walletServiceOpen.UpdateWalletByUserId(currentUser.Id, currentUser.Coins);
