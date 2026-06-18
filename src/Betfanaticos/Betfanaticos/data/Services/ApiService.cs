@@ -52,10 +52,6 @@ namespace Betfanaticos.data.Services
         }
 
 
-
-
-
-
         public async Task<List<Match>> GetBasketballMatchesAsync()
         {
             try

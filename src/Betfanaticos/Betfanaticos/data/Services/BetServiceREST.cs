@@ -1,7 +1,8 @@
-﻿using System.Net.Http;
+﻿using Betfanaticos.domain;
+using Serilog;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
-using Betfanaticos.domain;
 
 namespace Betfanaticos.data.Services
 {
@@ -9,25 +10,35 @@ namespace Betfanaticos.data.Services
     {
         private readonly HttpClient client;
 
+        // Konstruktor: Erstellt einen HttpClient und setzt die Adresse des FastAPI-Backends
         public BetServiceREST()
         {
             client = new HttpClient();
             client.BaseAddress = new Uri("http://127.0.0.1:8000/");
+            Log.Information("BetServiceREST wurde initialisiert");
         }
 
+        // Speichert eine neue Wette im Backend
+        // Zuerst wird ein Bet angelegt und anschließend ein BetItem mit allen Wettinformationen gespeichert
         public async Task SaveBet(User user, Match match, int amount, string prediction, double odds)
         {
+            Log.Information("Neue Wette wird gespeichert: UserId={UserId}, MatchId={MatchId}, Amount={Amount}, Prediction={Prediction}, Odds={Odds}", user.Id, match.Id, amount, prediction, odds);
             var betRequest = new BetCreateRequest
             {
                 status = "Open",
                 user_id = user.Id
             };
 
+
             var betResponse = await client.PostAsJsonAsync("bet/", betRequest);
             var betContent = await betResponse.Content.ReadAsStringAsync();
 
             if (!betResponse.IsSuccessStatusCode)
+            {
+                Log.Error("Fehler beim Speichern der Wette");
                 throw new Exception(betContent);
+
+            }
 
             var createdBet = JsonSerializer.Deserialize<BetCreateResponse>(
                 betContent,
@@ -56,6 +67,7 @@ namespace Betfanaticos.data.Services
                 throw new Exception(betItemContent);
         }
 
+        // Lädt alle offenen Wetten eines bestimmten Benutzers aus dem Backend
         public async Task<List<BetitemResponse>> GetOpenBetsByUserId(int userId)
         {
             var response = await client.GetAsync($"betitem/open/{userId}");
@@ -70,6 +82,7 @@ namespace Betfanaticos.data.Services
             ) ?? new List<BetitemResponse>();
         }
 
+        // Aktualisiert eine vorhandene Wette (Status => WON/LOST)
         public async Task UpdateBetItem(BetitemResponse betitem)
         {
             var request = new BetitemCreateRequest
